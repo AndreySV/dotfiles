@@ -1,0 +1,9 @@
+;;; -*- coding: utf-8 -*-
+(("/etc/init.d/aiccu" . 1380)
+ ("/home/andrey/bin/connect_to_work.sh" . 71)
+ ("/home/andrey/data/programming/improve_dropbox/01_backup_dropbox.sh" . 1213)
+ ("/home/andrey/data/programming/improve_dropbox/02_get_referrals.sh" . 6771)
+ ("/home/andrey/data/programming/improve_dropbox/03_restore_dropbox.sh" . 2462)
+ ("/home/andrey/data/programming/improve_dropbox/config.sh" . 521)
+ ("/home/andrey/data/programming/improve_dropbox/easymac.sh" . 2131)
+ ("/usr/include/pthread.h" . 1116))

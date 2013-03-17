@@ -1,6 +1,5 @@
-
-
-
-PATH=$PATH:~/bin:~/bin/usr/bin:/usr/sbin:/sbin
-export PATH
+if [ -f ~/.bashrc ];
+then
+        source ~/.bashrc
+fi
 

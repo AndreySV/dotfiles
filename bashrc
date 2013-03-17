@@ -84,6 +84,22 @@ unset color_prompt force_color_prompt
 
 
 
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games"
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+PATH="$PATH:/opt/CodeSourcery/arm-2012.03/bin"
+PATH="$PATH:/usr/local/angstrom/arm/bin"
+export PATH
+
+
+export EDITOR="emacs"
+
+
+
+
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -94,17 +110,6 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# enable color support of ls and also add handy aliases
-if [ "$TERM" != "dumb" ] && [ -x /usr/bin/dircolors ]; then
-    eval "`dircolors -b`"
-    alias ls='ls --color=auto'
-    #alias dir='ls --color=auto --format=vertical'
-    #alias vdir='ls --color=auto --format=long'
-
-    #alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
-fi
 
 
 # enable programmable completion features (you don't need to enable
@@ -114,15 +119,3 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-
-PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games"
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-PATH="$PATH:/opt/CodeSourcery/arm-2012.03/bin"
-PATH="$PATH:/usr/local/angstrom/arm/bin"
-
-
-export PATH

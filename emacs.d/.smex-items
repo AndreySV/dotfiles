@@ -1,0 +1,28 @@
+
+;; ----- smex-history -----
+(
+ shell
+ man
+ set-language-environment
+ customize
+ compile
+ eval-region
+ write-region
+)
+
+;; ----- smex-data -----
+(
+ (ibuffer . 2)
+ (clipboard-yank . 2)
+ (eval-region . 4)
+ (write-region . 3)
+ (man . 8)
+ (compile . 5)
+ (shell . 5)
+ (whitespace-mode . 3)
+ (untabify . 2)
+ (delete-trailing-whitespace . 1)
+ (delete-backward-word . 1)
+ (customize . 1)
+ (set-language-environment . 1)
+)
