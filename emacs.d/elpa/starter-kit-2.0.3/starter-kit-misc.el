@@ -102,13 +102,11 @@
 (random t) ;; Seed the random-number generator
 
 ;; Hippie expand: at times perhaps too hip
-(eval-after-load 'hippie-exp
-  '(progn
-     (dolist (f '(try-expand-line try-expand-list try-complete-file-name-partially))
-       (delete f hippie-expand-try-functions-list))
+(dolist (f '(try-expand-line try-expand-list try-complete-file-name-partially))
+  (delete f hippie-expand-try-functions-list))
 
-     ;; Add this back in at the end of the list.
-     (add-to-list 'hippie-expand-try-functions-list 'try-complete-file-name-partially t)))
+;; Add this back in at the end of the list.
+(add-to-list 'hippie-expand-try-functions-list 'try-complete-file-name-partially t)
 
 (eval-after-load 'grep
   '(when (boundp 'grep-find-ignored-files)
@@ -121,10 +119,10 @@
      (set-face-foreground 'diff-added "green4")
      (set-face-foreground 'diff-removed "red3")))
 
-(eval-after-load 'magit
-  '(progn
-     (set-face-foreground 'magit-diff-add "green4")
-     (set-face-foreground 'magit-diff-del "red3")))
+;; (eval-after-load 'magit
+  ;; '(progn
+     ;; (set-face-foreground 'magit-diff-add "green4")
+     ;; (set-face-foreground 'magit-diff-del "red3")))
 
 ;; Get around the emacswiki spam protection
 (eval-after-load 'oddmuse

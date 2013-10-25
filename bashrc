@@ -40,7 +40,7 @@ export PROMPT_COMMAND="$UPDATE_HISTORY_COMMAND; $PROMPT_COMMAND"
 stty -ixon
 
 # Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob
+# shopt -s nocaseglob
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -90,8 +90,10 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-PATH="$PATH:/opt/CodeSourcery/arm-2012.03/bin"
-PATH="$PATH:/usr/local/angstrom/arm/bin"
+PATH=$PATH:/opt/CodeSourcery/arm-2012.03/bin
+PATH=$PATH:/usr/local/angstrom/arm/bin
+PATH=$PATH:~/bin/usr/autopano
+PATH=$PATH:/opt/x86_64-unknown-linux-gnu/4.8.2/bin/
 export PATH
 
 
@@ -119,3 +121,4 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
+umask 0027

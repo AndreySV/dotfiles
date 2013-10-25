@@ -1,10 +1,10 @@
 ;;; find-file-in-project-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (find-file-in-project) "find-file-in-project" "find-file-in-project.el"
-;;;;;;  (20734 34999 0 0))
+;;;### (autoloads nil "find-file-in-project" "find-file-in-project.el"
+;;;;;;  (21098 11565 0 0))
 ;;; Generated autoloads from find-file-in-project.el
 
 (autoload 'find-file-in-project "find-file-in-project" "\
@@ -32,16 +32,14 @@ setting the variable `ffip-project-root'.
 
 ;;;***
 
-;;;### (autoloads nil nil ("find-file-in-project-pkg.el") (20734
-;;;;;;  34999 601894 340000))
+;;;### (autoloads nil nil ("find-file-in-project-pkg.el") (21098
+;;;;;;  11565 516565 900000))
 
 ;;;***
 
-(provide 'find-file-in-project-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; find-file-in-project-autoloads.el ends here

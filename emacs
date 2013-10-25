@@ -2,18 +2,31 @@
 
 ;; This file is designed to be re-evaled; use the variable first-time
 ;; to avoid any problems with this.
-(defvar first-time t 
+(defvar first-time t
   "Flag signifying this is the first time that .emacs has been evaled")
 
-;; (set-language-environment 'UTF-8)
+(set-language-environment 'UTF-8)
 
+
+;;
+;; repositories
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  )
+
+
+;;
 ;; Meta
 (global-set-key "\M- " 'set-mark-command)
-(global-set-key "\M-\C-h" 'backward-kill-word)
+(global-set-key "\M-h" 'backward-kill-word)
+(global-set-key "\C-h" 'delete-backward-char)
 (global-set-key "\M-\C-r" 'query-replace)
 (global-set-key "\M-r" 'replace-string)
 (global-set-key "\M-g" 'goto-line)
-(global-set-key "\M-h" 'help-command)
+
 
 ;; Function keys
 (global-set-key [f1] 'manual-entry)
@@ -30,9 +43,10 @@
 ;; (global-set-key [S-f6] 'previous-error)
 
 ;; (global-set-key [C-f9] 'gdb)
-;; (global-set-key [f9] 'ompile)
+;; (global-set-key [f9] 'compile)
 ;; (global-set-key [f10] 'save-buffers-kill-terminal)
 (global-set-key [f10] 'next-error)
+(global-set-key [S-f10] 'previous-error)
 (global-set-key [f11] 'recompile)
 (global-set-key [S-f11] 'compile)
 (global-set-key [f12] 'grep)
@@ -63,14 +77,95 @@
 (global-set-key [C-prior] "\M-<")
 (global-set-key [C-next] "\M->")
 
+
+;; 
+;; save user data separe from configuration directory
+(setq emacs-user-directory "~/.emacs_usr")
+(if (not (file-exists-p emacs-user-directory))
+    (make-directory emacs-user-directory t))
+
+
+
+;;
 ;; backups
-(setq backup-by-copying t)              ; make backups by copying 
-(setq vc-make-backup-files t)           ; make backup files even for files
-                                        ; covered by version control 
+(setq backup-by-copying t)		; make backups by copying
+(setq vc-make-backup-files t)		; make backup files even for files
+					; covered by version control
 (setq delete-old-versions t
   kept-new-versions 6
   kept-old-versions 4
   version-control t)
+
+;; path for backup files
+
+(setq emacs-backup-directory (concat emacs-user-directory "/backup"))
+
+;; autocreate backup directory
+(if (not (file-exists-p emacs-backup-directory))
+    (make-directory emacs-backup-directory t))
+
+;; delete backup files older than a week on start
+(message "Deleting old backup files...")
+(let ((week (* 60 60 24 7))
+      (current (float-time (current-time))))
+  (dolist (file (directory-files emacs-backup-directory t))
+    (when (and (backup-file-name-p file)
+	       (> (- current (float-time (nth 5 (file-attributes file))))
+		  week))
+      (message "%s" file)
+      (delete-file file))))
+
+
+(setq backup-directory-alist
+      `((".*" . ,emacs-backup-directory)))
+
+
+
+
+
+
+
+;; 
+;; autosave
+
+;; path for autosave files
+(setq emacs-autosave-directory (concat emacs-user-directory "/autosave"))
+
+;; autocreate directory for autosave
+(if (not (file-exists-p emacs-autosave-directory))
+    (make-directory emacs-autosave-directory t))
+
+;; delete autosave files older than a week on start
+(message "Deleting old autosave files...")
+(let ((week (* 60 60 24 7))
+      (current (float-time (current-time))))
+  (dolist (file (directory-files emacs-autosave-directory t))
+    (when (and (backup-file-name-p file)
+	       (> (- current (float-time (nth 5 (file-attributes file))))
+		  week))
+      (message "%s" file)
+      (delete-file file))))
+
+(setq auto-save-file-name-transforms
+      `((".*" ,emacs-autosave-directory t)))
+
+
+
+
+
+
+;; command history
+(setq savehist-file (concat emacs-user-directory "/savehist"))
+(savehist-mode t)
+
+
+
+
+;; checkpatch for C source files
+(defun checkpatch()
+  (interactive)
+  (compile (concat "checkpatch.pl --emacs --terse --file " (buffer-file-name))))
+
 
 ;; iBuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -93,21 +188,6 @@
 (require 'tar-mode)
 
 
-;; Delete backward word functionality
-(defun delete-word (arg)
-  "Delete characters forward until encountering the end of a word.
-With argument, do this that many times."
-  (interactive "p")
-  (delete-region (point) (progn (forward-word arg) (point))))
-
-(defun delete-backward-word (arg)
-  "Delete characters backward until encountering the end of a word.
-With argument, do this that many times."
-  (interactive "p")
-  (delete-word (- arg)))
-
-(global-set-key [M-Backspace] 'delete-backward-word)
-
 ;; Pretty diff mode
 (autoload 'ediff-buffers "ediff" "Intelligent Emacs interface to diff" t)
 (autoload 'ediff-files "ediff" "Intelligent Emacs interface to diff" t)
@@ -117,14 +197,14 @@ With argument, do this that many times."
 (if first-time
     (setq auto-mode-alist
       (append '(("\\.cpp$" . c++-mode)
-            ("\\.hpp$" . c++-mode)
-                    ("\\.lsp$" . lisp-mode)
-            ("\\.scm$" . scheme-mode)
-            ("\\.pl$" . perl-mode)
-            ) auto-mode-alist)))
+	    ("\\.hpp$" . c++-mode)
+		    ("\\.lsp$" . lisp-mode)
+	    ("\\.scm$" . scheme-mode)
+	    ("\\.pl$" . perl-mode)
+	    ) auto-mode-alist)))
 
 ;; Auto font lock mode
-(defvar font-lock-auto-mode-list 
+(defvar font-lock-auto-mode-list
   (list 'c-mode 'c++-mode 'c++-c-mode 'emacs-lisp-mode 'lisp-mode 'perl-mode 'scheme-mode)
   "List of modes to always start in font-lock-mode")
 
@@ -136,7 +216,7 @@ With argument, do this that many times."
 (defun font-lock-auto-mode-select ()
   "Automatically select font-lock-mode if the current major mode is
 in font-lock-auto-mode-list"
-  (if (memq major-mode font-lock-auto-mode-list) 
+  (if (memq major-mode font-lock-auto-mode-list)
       (progn
     (font-lock-mode t))
     )
@@ -149,51 +229,114 @@ in font-lock-auto-mode-list"
 (setq dabbrev-always-check-other-buffers t)
 (setq dabbrev-abbrev-char-regexp "\\sw\\|\\s_")
 (add-hook 'emacs-lisp-mode-hook
-      '(lambda () 
-         (set (make-local-variable 'dabbrev-case-fold-search) nil)
-         (set (make-local-variable 'dabbrev-case-replace) nil)))
+      '(lambda ()
+	 (set (make-local-variable 'dabbrev-case-fold-search) nil)
+	 (set (make-local-variable 'dabbrev-case-replace) nil)))
 (add-hook 'c-mode-hook
-      '(lambda () 
-         (set (make-local-variable 'dabbrev-case-fold-search) nil)
-         (set (make-local-variable 'dabbrev-case-replace) nil)))
+      '(lambda ()
+	 (set (make-local-variable 'dabbrev-case-fold-search) nil)
+	 (set (make-local-variable 'dabbrev-case-replace) nil)))
 (add-hook 'text-mode-hook
-      '(lambda () 
-         (set (make-local-variable 'dabbrev-case-fold-search) t)
-         (set (make-local-variable 'dabbrev-case-replace) t)))
+      '(lambda ()
+	 (set (make-local-variable 'dabbrev-case-fold-search) t)
+	 (set (make-local-variable 'dabbrev-case-replace) t)))
+
+
 
 ;; C++ and C mode...
  (setq c-default-style "bsd"
-      c-basic-offset 4)
+      c-basic-offset 8)
 
-(defun my-c++-mode-hook ()
-  (setq tab-width 4)
+(defun c-lineup-arglist-tabs-only (ignored)
+  "Line up argument lists by tabs, not spaces"
+  (let* ((anchor (c-langelem-pos c-syntactic-element))
+	  (column (c-langelem-2nd-pos c-syntactic-element))
+	   (offset (- (1+ column) anchor))
+	    (steps (floor offset c-basic-offset)))
+    (* (max steps 1)
+       c-basic-offset)))
+
+
+(defun my-c++-mode-hook-common ()
+  (setq tab-width c-basic-offset)
   (define-key c++-mode-map "\C-m" 'reindent-then-newline-and-indent)
   (define-key c++-mode-map "\C-ce" 'c-comment-edit)
   (setq c++-auto-hungry-initial-state 'none)
   (setq c++-delete-function 'delete-char)
   (setq c++-tab-always-indent t)
-  (setq c-indent-level 4)
-  (setq indent-tabs-mode nil)
-  (setq c-continued-statement-offset 4)
-  (setq c++-empty-arglist-indent 4))
+  (setq c-indent-level tab-width)
 
-(defun my-c-mode-hook ()
-  (setq tab-width 4)
+  (setq c-continued-statement-offset tab-width)
+  (setq c++-empty-arglist-indent tab-width)
+  (c-set-offset 'case-label '+)		; indent case lagels by
+					; c-indent-level, too
+  ;; (whitespace-mode)
+)
+
+(defun my-c++-mode-hook-tabs ()
+  (my-c++-mode-hook-common)
+  (setq indent-tabs-mode t)
+)
+
+(defun my-c++-mode-hook-spaces ()
+  (my-c++-mode-hook-common)
+  (setq indent-tabs-mode nil)
+)
+
+
+
+
+
+
+(defun my-c-mode-hook-common ()
+  (setq tab-width c-basic-offset)
   (define-key c-mode-map "\C-m" 'reindent-then-newline-and-indent)
   (define-key c-mode-map "\C-ce" 'c-comment-edit)
   (setq c-auto-hungry-initial-state 'none)
   (setq c-delete-function 'delete-char)
-  (setq indent-tabs-mode nil)
+
+  (define-key c-mode-map "\C-m" 'reindent-then-newline-and-indent)
+  (define-key c-mode-map "\C-ce" 'c-comment-edit)
+  (setq c-auto-hungry-initial-state 'none)
+  (setq c-delete-function 'delete-char)
+
   (setq c-tab-always-indent t)
 ;; BSD-ish indentation style
-  (setq c-indent-level 4)
-  (setq c-continued-statement-offset 4)
-  (setq c-brace-offset -4)
-  (setq c-argdecl-indent 0)
-  (setq c-label-offset -4)
 
-(c-set-offset 'case-label '+))       ; indent case labels by
-                                     ; c-indent-level, too
+  (setq c-indent-level tab-width)
+  (setq c-continued-statement-offset tab-width)
+  (setq c-brace-offset (- 0 tab-width))
+  (setq c-argdecl-indent 0)
+  (setq c-label-offset (- 0 tab-width))
+
+
+  (c-set-offset 'case-label '+)	     ; indent case labels by
+				     ; c-indent-level, too
+  ;; (whitespaces-mode)
+)
+
+;;
+;; linux kernel codestyle
+(defun my-c-mode-hook-tabs ()
+  (my-c-mode-hook-common)
+  (setq indent-tabs-mode t)
+
+  (c-add-style
+   "linux-tabs-only"
+   '("linux" (c-offsets-alist
+	      (arglist-cont-nonempty
+	       c-lineup-gcc-asm-reg
+	       c-lineup-arglist-tabs-only))))
+  (c-set-style "linux-tabs-only")
+)
+
+
+(defun my-c-mode-hook-spaces ()
+  (my-c-mode-hook-common)
+  (setq indent-tabs-mode t)
+
+  (c-set-style "linux")
+)
 
 ;; Perl mode
 (defun my-perl-mode-hook ()
@@ -201,6 +344,33 @@ in font-lock-auto-mode-list"
   (define-key c++-mode-map "\C-m" 'reindent-then-newline-and-indent)
   (setq perl-indent-level 4)
   (setq perl-continued-statement-offset 4))
+
+
+;; XML mode
+
+;; hide-show for nxml mode
+(add-to-list 'hs-special-modes-alist
+	     '(nxml-mode
+	       "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
+	       ""
+	       "<!--" ;; won't work on its own; uses syntax table
+	       (lambda (arg) (my-nxml-forward-element))
+	       nil))
+
+(defun my-nxml-forward-element ()
+  (let ((nxml-sexp-element-flag))
+    (setq nxml-sexp-element-flag (not (looking-at "<!--")))
+    (unless (looking-at outline-regexp)
+      (condition-case nil
+	  (nxml-forward-balanced-item 1)
+	(error nil)))))
+
+;; where to find xml schemas
+;; (eval-after-load 'rng-loc
+  ;; '(add-to-list 'rng-schema-locating-files "~/.schema/schemas.xml"))
+
+
+
 
 ;; Scheme mode...
 (defun my-scheme-mode-hook ()
@@ -213,8 +383,9 @@ in font-lock-auto-mode-list"
   (define-key lisp-mode-map "\C-j" 'eval-print-last-sexp))
 
 ;; Add all of the hooks...
-(add-hook 'c++-mode-hook 'my-c++-mode-hook)
-(add-hook 'c-mode-hook 'my-c-mode-hook)
+(add-hook 'c++-mode-hook 'my-c++-mode-hook-tabs)
+(add-hook 'c-mode-hook 'my-c-mode-hook-tabs)
+;; (add-hook 'c-mode-hook 'my-c-mode-hook-spaces)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 (add-hook 'emacs-lisp-mode-hook 'my-lisp-mode-hook)
 (add-hook 'lisp-mode-hook 'my-lisp-mode-hook)
@@ -226,12 +397,20 @@ in font-lock-auto-mode-list"
   (interactive "p")
   (next-error (- n)))
 
+(defun recompile()
+  "default recompile function. It will be changed after the first call of compile function."
+  (interactive)
+  (compile compile-command))
+
+
+
 ;; Misc...
 (transient-mark-mode 1)
 (setq mark-even-if-inactive t)
 (setq visible-bell nil)
 (setq next-line-add-newlines nil)
 (setq compile-command "make")
+
 (setq suggest-key-bindings nil)
 (put 'eval-expression 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -269,7 +448,7 @@ in font-lock-auto-mode-list"
       (global-set-key "\C-cmm" 'menu-bar-mode)
       (global-set-key "\C-cms" 'scroll-bar-mode)
       (global-set-key [backspace] 'backward-delete-char)
-                    ;      (global-set-key [delete] 'delete-char)
+		    ;	   (global-set-key [delete] 'delete-char)
       (standard-display-european t)
       (load-library "iso-transl")))
 
@@ -278,26 +457,26 @@ in font-lock-auto-mode-list"
     (progn
       ;;      (global-set-key [M-f1] 'hilit-repaint-command)
       ;;      (global-set-key [M-f2] [?\C-u M-f1])
-      (setq hilit-mode-enable-list  
-        '(not text-mode c-mode c++-mode emacs-lisp-mode lisp-mode
-          scheme-mode)
-        hilit-auto-highlight nil
-        hilit-auto-rehighlight 'visible
-        hilit-inhibit-hooks nil
-        hilit-inhibit-rebinding t)
+      (setq hilit-mode-enable-list
+	'(not text-mode c-mode c++-mode emacs-lisp-mode lisp-mode
+	  scheme-mode)
+	hilit-auto-highlight nil
+	hilit-auto-rehighlight 'visible
+	hilit-inhibit-hooks nil
+	hilit-inhibit-rebinding t)
       (require 'hilit19)
       (require 'paren))
-  (setq baud-rate 2400)         ; For slow serial connections
+  (setq baud-rate 2400)		; For slow serial connections
   )
 
 ;; TTY type terminal
-(if (and (not window-system) 
+(if (and (not window-system)
      (not (equal system-type 'ms-dos)))
     (progn
       (if first-time
       (progn
-        (keyboard-translate ?\C-h ?\C-?)
-        (keyboard-translate ?\C-? ?\C-h)))))
+	(keyboard-translate ?\C-h ?\C-?)
+	(keyboard-translate ?\C-? ?\C-h)))))
 
 ;; Under UNIX
 (if (not (equal system-type 'ms-dos))
@@ -333,9 +512,9 @@ in font-lock-auto-mode-list"
 ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
 (defun comment-dwim-line (&optional arg)
   "Replacement for the comment-dwim command.
-        If no region is selected and current line is not blank and we are not at the end of the line,
-        then comment current line.
-        Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
+	If no region is selected and current line is not blank and we are not at the end of the line,
+	then comment current line.
+	Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
   (interactive "*P")
   (comment-normalize-vars)
   (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
@@ -344,3 +523,15 @@ in font-lock-auto-mode-list"
 
 (global-set-key "\M-;" 'comment-dwim-line)
 (put 'downcase-region 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values (quote ((eval universal-coding-syste-argument cp1251-unix) (whitespace-line-column . 80) (lexical-binding . t)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

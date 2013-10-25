@@ -1,9 +1,9 @@
 ;;; starter-kit-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "starter-kit" "starter-kit.el" (20734 35000
+;;;### (autoloads nil "starter-kit" "starter-kit.el" (21098 14227
 ;;;;;;  0 0))
 ;;; Generated autoloads from starter-kit.el
 
@@ -30,15 +30,13 @@
 ;;;***
 
 ;;;### (autoloads nil nil ("starter-kit-defuns.el" "starter-kit-misc.el"
-;;;;;;  "starter-kit-pkg.el") (20734 35000 910220 950000))
+;;;;;;  "starter-kit-pkg.el") (21098 14227 630372 838000))
 
 ;;;***
 
-(provide 'starter-kit-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; starter-kit-autoloads.el ends here
