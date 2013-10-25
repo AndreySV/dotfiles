@@ -97,7 +97,7 @@ PATH=$PATH:/opt/x86_64-unknown-linux-gnu/4.8.2/bin/
 export PATH
 
 
-export EDITOR="emacs"
+export EDITOR="emacsclient"
 
 
 
