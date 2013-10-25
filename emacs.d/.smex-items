@@ -5,9 +5,9 @@
  describe-function
  compile
  byte-force-recompile
- magit-status
  package-list-packages
  whitespace-mode
+ man
 )
 
 ;; ----- smex-data -----
