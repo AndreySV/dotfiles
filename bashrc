@@ -97,7 +97,15 @@ PATH=$PATH:/opt/x86_64-unknown-linux-gnu/4.8.2/bin/
 export PATH
 
 
-export EDITOR="emacsclient"
+# ccache settings
+# ccache -M 4G
+CCACHE_DIR=~/data/linux/.ccache
+PATH=/usr/lib/ccache:$PATH
+export PATH
+
+
+export ALTERNATE_EDITOR="emacs --daemon"
+export EDITOR="edit.sh"
 
 
 
