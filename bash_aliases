@@ -10,9 +10,10 @@ alias most_used_commands="history | awk '{ \$1=\"\"; \$2=\"\"; \$3=\"\"; \$4=\"\
     
 
 # some more ls aliases
-alias ll='ls -lh'
-alias la='ls -A'
-alias l='ls -CF'
+alias ll='ls --color=auto -lh'
+alias la='ls --color=auto -A'
+alias l=' ls --color=auto -CF'
+alias ls='ls --color=auto' 
 
 # Simple Commands
 alias ..='cd ..'
