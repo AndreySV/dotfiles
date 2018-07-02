@@ -524,6 +524,35 @@ in font-lock-auto-mode-list"
 ;; All done
 (message "All done, %s%s" (user-login-name) ".")
 
+
+;; helper for Debian Website proofreading
+(defun debwww-open-russian-file ()
+  (interactive)
+  (if (region-active-p) nil (mark-whole-buffer))
+  (goto-char (region-beginning))
+  (if (search-forward "> +++ russian/" nil t)
+      (let ((filename (buffer-substring-no-properties (line-beginning-position) (line-end-position))))
+        (setq filename (replace-regexp-in-string "^.*+++ russian/" "russian/" filename))
+        (setq filename (replace-regexp-in-string ".wml\t.*" ".wml" filename))
+        (setq filename (concat "/mnt/data/developer/tmp/debian/webwml/" filename))
+        (message "File is found: -%s-" filename)
+        (deactivate-mark)
+        (find-file-existing filename)
+        )
+    (message "WML filename is not found"))
+  (deactivate-mark)
+)
+
+;; commit helper for Debian Website proofreading
+(defun debwww-commit-changes ()
+  (interactive)
+  (shell-command "cvs diff")
+  (switch-to-buffer-other-window "*Shell Command Output*")
+  (if (equal (read-char-choice "Is diff correct? <n/Y>" '(?n ?y)) '?y)
+      (shell-command "cvs commit -m '(Russian) Proofread translation'"))
+  )
+
+
 ;; Original idea from
 ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
 (defun comment-dwim-line (&optional arg)
