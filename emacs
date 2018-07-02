@@ -165,6 +165,10 @@
 
 
 
+;; autodetection of codepage
+(when (load "auto-enca" 'noerror)
+  (modify-coding-system-alist 'file "" 'enca-detect-coding))
+
 
 ;; command history
 (setq savehist-file (concat emacs-user-directory "/savehist"))
