@@ -27,6 +27,26 @@
 
 
 ;;
+;; enable ido completion everywhere
+(require 'ido)
+(ido-mode t)
+(ido-everywhere 1)
+(ido-ubiquitous-mode 1)
+
+;; allows to use ido for completion of commands in M-x,
+;; with enhancements like putting your most-used commands
+;; at the front of the list
+(require 'smex)
+(smex-initialize) ; Can be omitted. This might cause a (minimal) delay
+                  ; when Smex is auto-initialized on its first run.
+
+;; replace normal M-x key-binding with smex
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+
+
+
+;;
 ;; Meta
 (global-set-key "\M- " 'set-mark-command)
 (global-set-key "\M-h" 'backward-kill-word)
@@ -591,7 +611,18 @@ in font-lock-auto-mode-list"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(safe-local-variable-values (quote ((eval universal-coding-syste-argument cp1251-unix) (whitespace-line-column . 80) (lexical-binding . t)))))
+ '(compilation-scroll-output (quote first-error))
+ '(custom-safe-themes
+   (quote
+    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
+ '(frame-background-mode (quote dark))
+ '(package-selected-packages
+   (quote
+    (find-file-in-project idle-highlight-mode ido-ubiquitous paredit smex solarized-theme magit xclip pymacs monky exec-path-from-shell)))
+ '(safe-local-variable-values
+   (quote
+    ((whitespace-line-column . 80)
+     (lexical-binding . t)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
