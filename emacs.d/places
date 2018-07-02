@@ -1,7 +1,0 @@
-;;; -*- coding: utf-8 -*-
-(("/etc/init.d/aiccu" . 1380)
- ("/usr/amd64-mingw32msvc/include/fcntl.h" . 292)
- ("/usr/bin/wammu" . 796)
- ("/usr/include/pthread.h" . 1116)
- ("/usr/include/stdlib.h" . 24880)
- ("/usr/include/string.h" . 1888))
