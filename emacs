@@ -86,6 +86,10 @@
 (global-set-key [C-next] "\M->")
 
 
+
+;; Mutt support.
+(setq auto-mode-alist (append '(("/tmp/mutt.*" . mail-mode)) auto-mode-alist))
+
 ;; 
 ;; save user data separe from configuration directory
 (setq emacs-user-directory "~/.emacs_usr")
