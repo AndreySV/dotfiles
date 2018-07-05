@@ -141,21 +141,20 @@
   version-control t)
 
 ;; path for backup files
-
 (setq emacs-backup-directory (concat emacs-user-directory "/backup"))
 
 ;; autocreate backup directory
 (if (not (file-exists-p emacs-backup-directory))
     (make-directory emacs-backup-directory t))
 
-;; delete backup files older than a week on start
+;; delete backup files older than a 30 dyas on start
 (message "Deleting old backup files...")
-(let ((week (* 60 60 24 7))
+(let ((days (* 60 60 24 30))
       (current (float-time (current-time))))
   (dolist (file (directory-files emacs-backup-directory t))
     (when (and (backup-file-name-p file)
 	       (> (- current (float-time (nth 5 (file-attributes file))))
-		  week))
+		  days))
       (message "%s" file)
       (delete-file file))))
 
@@ -179,14 +178,14 @@
 (if (not (file-exists-p emacs-autosave-directory))
     (make-directory emacs-autosave-directory t))
 
-;; delete autosave files older than a week on start
+;; delete autosave files older than a 30 days on start
 (message "Deleting old autosave files...")
-(let ((week (* 60 60 24 7))
+(let ((days (* 60 60 24 30))
       (current (float-time (current-time))))
   (dolist (file (directory-files emacs-autosave-directory t))
     (when (and (backup-file-name-p file)
 	       (> (- current (float-time (nth 5 (file-attributes file))))
-		  week))
+		  days))
       (message "%s" file)
       (delete-file file))))
 
