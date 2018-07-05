@@ -335,12 +335,6 @@ in font-lock-auto-mode-list"
   (define-key c-mode-map "\C-ce" 'c-comment-edit)
   (setq c-auto-hungry-initial-state 'none)
   (setq c-delete-function 'delete-char)
-
-  (define-key c-mode-map "\C-m" 'reindent-then-newline-and-indent)
-  (define-key c-mode-map "\C-ce" 'c-comment-edit)
-  (setq c-auto-hungry-initial-state 'none)
-  (setq c-delete-function 'delete-char)
-
   (setq c-tab-always-indent t)
 ;; BSD-ish indentation style
 
