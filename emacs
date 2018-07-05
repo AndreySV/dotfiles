@@ -32,22 +32,49 @@
 
 ;;
 ;; enable ido completion everywhere
-(require 'ido)
-(ido-mode t)
-(ido-everywhere 1)
-(ido-ubiquitous-mode 1)
+(use-package ido
+  :ensure t
+  :config
+  (ido-mode t)
+  (ido-everywhere 1)
+  (ido-ubiquitous-mode 1)
+  (setq ido-enable-prefix nil
+      ido-enable-flex-matching t
+      ido-auto-merge-work-directories-length nil
+      ido-create-new-buffer 'always
+      ido-use-filename-at-point 'guess
+      ido-use-virtual-buffers t
+      ido-handle-duplicate-virtual-buffers 2
+      ido-max-prospects 10))
 
+;;
 ;; allows to use ido for completion of commands in M-x,
 ;; with enhancements like putting your most-used commands
 ;; at the front of the list
-(require 'smex)
-(smex-initialize) ; Can be omitted. This might cause a (minimal) delay
-                  ; when Smex is auto-initialized on its first run.
+(use-package smex
+  :ensure t
+
+  :config
+  ;; Can be omitted. This might cause a (minimal) delay
+  ;; when Smex is auto-initialized on its first run.
+  (smex-initialize))
 
 ;; replace normal M-x key-binding with smex
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
+;;
+;; package to work seamlessly with X
+;; clipboard buffer
+(use-package xclip
+  :ensure t
+  :config
+  (xclip-mode +1)
+  (setq
+   x-select-enable-clipboard t
+   x-select-enable-primary t
+   x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)
+   x-stretch-cursor t))
 
 
 ;;
@@ -120,14 +147,6 @@
 (if (not (file-exists-p emacs-user-directory))
     (make-directory emacs-user-directory t))
 
-
-(require 'xclip)
-(xclip-mode +1)
-(setq
-  x-select-enable-clipboard t
-  x-select-enable-primary t
-  x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)
-  x-stretch-cursor t)
 
 
 ;;
