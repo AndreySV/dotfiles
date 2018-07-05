@@ -373,58 +373,11 @@ in font-lock-auto-mode-list"
   (c-set-style "linux")
 )
 
-;; Perl mode
-(defun my-perl-mode-hook ()
-  (setq tab-width 4)
-  (define-key c++-mode-map "\C-m" 'reindent-then-newline-and-indent)
-  (setq perl-indent-level 4)
-  (setq perl-continued-statement-offset 4))
-
-
-;; XML mode
-
-;; hide-show for nxml mode
-(add-to-list 'hs-special-modes-alist
-	     '(nxml-mode
-	       "<!--\\|<[^/>]>\\|<[^/][^>]*[^/]>"
-	       ""
-	       "<!--" ;; won't work on its own; uses syntax table
-	       (lambda (arg) (my-nxml-forward-element))
-	       nil))
-
-(defun my-nxml-forward-element ()
-  (let ((nxml-sexp-element-flag))
-    (setq nxml-sexp-element-flag (not (looking-at "<!--")))
-    (unless (looking-at outline-regexp)
-      (condition-case nil
-	  (nxml-forward-balanced-item 1)
-	(error nil)))))
-
-;; where to find xml schemas
-;; (eval-after-load 'rng-loc
-  ;; '(add-to-list 'rng-schema-locating-files "~/.schema/schemas.xml"))
-
-
-
-
-;; Scheme mode...
-(defun my-scheme-mode-hook ()
-  (define-key scheme-mode-map "\C-m" 'reindent-then-newline-and-indent))
-
-;; emacs-lisp mode...
-(defun my-lisp-mode-hook ()
-  (define-key lisp-mode-map "\C-m" 'reindent-then-newline-and-indent)
-  (define-key lisp-mode-map "\C-i" 'lisp-indent-line)
-  (define-key lisp-mode-map "\C-j" 'eval-print-last-sexp))
 
 ;; Add all of the hooks...
 (add-hook 'c++-mode-hook 'my-c++-mode-hook-tabs)
 (add-hook 'c-mode-hook 'my-c-mode-hook-tabs)
 ;; (add-hook 'c-mode-hook 'my-c-mode-hook-spaces)
-(add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
-(add-hook 'emacs-lisp-mode-hook 'my-lisp-mode-hook)
-(add-hook 'lisp-mode-hook 'my-lisp-mode-hook)
-(add-hook 'perl-mode-hook 'my-perl-mode-hook)
 
 ;; Complement to next-error
 (defun previous-error (n)
