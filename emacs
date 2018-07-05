@@ -23,6 +23,10 @@
   (add-to-list 'package-archives '("marmalade" . (concat proto "://marmalade-repo.org/packages/")) t))
 (package-initialize)
 
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
 
 
 
@@ -565,7 +569,7 @@ in font-lock-auto-mode-list"
  '(frame-background-mode (quote dark))
  '(package-selected-packages
    (quote
-    (find-file-in-project idle-highlight-mode ido-ubiquitous paredit smex solarized-theme magit xclip pymacs monky exec-path-from-shell)))
+    (use-package find-file-in-project idle-highlight-mode ido-ubiquitous paredit smex solarized-theme magit xclip pymacs monky exec-path-from-shell)))
  '(safe-local-variable-values
    (quote
     ((whitespace-line-column . 80)
