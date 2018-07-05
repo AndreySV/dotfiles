@@ -28,6 +28,13 @@
   (package-install 'use-package))
 
 
+;;
+;; package help to learn new keybindings
+;; it displays keybindings in a popup window
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
 
 
 ;;
