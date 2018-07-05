@@ -148,14 +148,6 @@
 ;; Mutt support.
 (setq auto-mode-alist (append '(("/tmp/mutt.*" . mail-mode)) auto-mode-alist))
 
-;; 
-;; save user data separe from configuration directory
-(setq emacs-user-directory "~/.emacs_usr")
-(if (not (file-exists-p emacs-user-directory))
-    (make-directory emacs-user-directory t))
-
-
-
 ;;
 ;; backups
 (setq backup-by-copying t)		; make backups by copying
@@ -167,7 +159,7 @@
   version-control t)
 
 ;; path for backup files
-(setq emacs-backup-directory (concat emacs-user-directory "/backup"))
+(setq emacs-backup-directory (concat user-emacs-directory "backup"))
 
 ;; autocreate backup directory
 (if (not (file-exists-p emacs-backup-directory))
@@ -189,16 +181,11 @@
       `((".*" . ,emacs-backup-directory)))
 
 
-
-
-
-
-
-;; 
+;;
 ;; autosave
 
 ;; path for autosave files
-(setq emacs-autosave-directory (concat emacs-user-directory "/autosave"))
+(setq emacs-autosave-directory (concat user-emacs-directory "autosave"))
 
 ;; autocreate directory for autosave
 (if (not (file-exists-p emacs-autosave-directory))
@@ -237,8 +224,9 @@
 
 
 ;; command history
-(setq savehist-file (concat emacs-user-directory "/savehist"))
+(setq savehist-file (concat user-emacs-directory "savehist"))
 (savehist-mode t)
+
 
 ;; Highlight matching parentheses when the point is on them.
 (show-paren-mode 1)
