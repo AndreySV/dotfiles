@@ -219,6 +219,12 @@
       `((".*" ,emacs-autosave-directory t)))
 
 
+;;
+;; automaticaly save the location of the point when you kill a buffer and
+;; returns to it next time you visit the associated file.
+(require 'saveplace)
+(setq save-place-file (concat emacs-user-directory "places")
+(save-place-mode)
 
 
 
