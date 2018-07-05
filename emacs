@@ -222,9 +222,12 @@
 ;;
 ;; automaticaly save the location of the point when you kill a buffer and
 ;; returns to it next time you visit the associated file.
-(require 'saveplace)
-(setq save-place-file (concat emacs-user-directory "places")
-(save-place-mode)
+(if (< emacs-major-version 25)
+    (progn
+      (require 'saveplace)
+      (setq-default save-place t)
+      (setq save-place-file (concat user-emacs-directory "places")))
+  (save-place-mode))
 
 
 
