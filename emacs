@@ -237,7 +237,8 @@
 (setq savehist-file (concat emacs-user-directory "/savehist"))
 (savehist-mode t)
 
-
+;; Highlight matching parentheses when the point is on them.
+(show-paren-mode 1)
 
 
 ;; checkpatch for C source files
