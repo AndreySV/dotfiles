@@ -458,6 +458,15 @@ in font-lock-auto-mode-list"
   (if bold (make-face-bold face))
   )
 
+(when window-system
+  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
+  (tooltip-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (menu-bar-mode -1)
+  (mouse-wheel-mode t)
+  (blink-cursor-mode -1))
+
 (if (eq window-system 'x)
     (progn
       (my-make-face 'blue "blue")
