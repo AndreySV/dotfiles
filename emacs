@@ -365,6 +365,8 @@ in font-lock-auto-mode-list"
   (interactive)
   (compile compile-command))
 
+;; set default compile command
+(setq compile-command "make")
 
 
 ;; Misc...
@@ -372,7 +374,7 @@ in font-lock-auto-mode-list"
 (setq mark-even-if-inactive t)
 (setq visible-bell nil)
 (setq next-line-add-newlines nil)
-(setq compile-command "make")
+
 
 (setq suggest-key-bindings nil)
 (put 'eval-expression 'disabled nil)
