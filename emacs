@@ -460,11 +460,9 @@ in font-lock-auto-mode-list"
 ;;  (set-face-background 'default "red")
     )))
 
+
 ;; Restore the "desktop" - do this as late as possible
-(if first-time
-    (progn
-      (desktop-load-default)
-      (desktop-read)))
+(desktop-save-mode t)
 
 ;; Indicate that this file has been read at least once
 (setq first-time nil)
