@@ -29,6 +29,23 @@
 
 
 ;;
+;; setup ergonomic keybindings
+(use-package xah-fly-keys
+  :ensure t
+  :init
+  ;; no control binding will be touched by xah-fly-keys
+  (setq xah-fly-use-control-key nil) ; must come before loading xah-fly-keys
+
+  :config
+  (xah-fly-keys-set-layout "qwerty") ; required if you use qwerty
+
+  (xah-fly-keys 1)
+
+  ;; Make Escape Key Do C-g
+  (define-key key-translation-map (kbd "ESC") (kbd "C-g")))
+
+
+;;
 ;; package help to learn new keybindings
 ;; it displays keybindings in a popup window
 (use-package which-key
@@ -66,9 +83,6 @@
   ;; when Smex is auto-initialized on its first run.
   (smex-initialize))
 
-;; replace normal M-x key-binding with smex
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 ;;
 ;; package to work seamlessly with X
@@ -84,65 +98,10 @@
    x-stretch-cursor t))
 
 
-;;
-;; Meta
-(global-set-key "\M- " 'set-mark-command)
-(global-set-key "\M-h" 'backward-kill-word)
-(global-set-key "\C-h" 'delete-backward-char)
-(global-set-key "\M-\C-r" 'query-replace)
-(global-set-key "\M-r" 'replace-string)
-(global-set-key "\M-g" 'goto-line)
-
-
-;; Function keys
-(global-set-key [f1] 'manual-entry)
-(global-set-key [f2] 'info)
-(global-set-key [f3] 'repeat-complex-command)
-(global-set-key [f4] 'advertised-undo)
-(global-set-key [f5] 'eval-current-buffer)
-(global-set-key [f6] 'buffer-menu)
-(global-set-key [f7] 'other-window)
-(global-set-key [f8] 'find-file)
-(global-set-key [f9] 'save-buffer)
-
-;; (global-set-key [f6] 'next-error)
-;; (global-set-key [S-f6] 'previous-error)
-
-;; (global-set-key [C-f9] 'gdb)
-;; (global-set-key [f9] 'compile)
-;; (global-set-key [f10] 'save-buffers-kill-terminal)
-(global-set-key [f10] 'next-error)
-(global-set-key [S-f10] 'previous-error)
-(global-set-key [f11] 'recompile)
-(global-set-key [S-f11] 'compile)
-(global-set-key [f12] 'grep)
-(global-set-key [C-f1] 'compile)
-(global-set-key [C-f2] 'grep)
-(global-set-key [C-f3] 'next-error)
-(global-set-key [C-f5] 'display-faces)
-(global-set-key [C-f8] 'dired)
-(global-set-key [C-f10] 'kill-compilation)
-
-
-;
-;; Keypad bindings
-(global-set-key [up] "\C-p")
-(global-set-key [down] "\C-n")
-(global-set-key [left] "\C-b")
-(global-set-key [right] "\C-f")
-(global-set-key [home] "\C-a")
-(global-set-key [end] "\C-e")
-(global-set-key [prior] "\M-v")
-(global-set-key [next] "\C-v")
-(global-set-key [C-up] "\M-\C-b")
-(global-set-key [C-down] "\M-\C-f")
-(global-set-key [C-left] "\M-b")
-(global-set-key [C-right] "\M-f")
-(global-set-key [C-home] "\M-<")
-(global-set-key [C-end] "\M->")
-(global-set-key [C-prior] "\M-<")
-(global-set-key [C-next] "\M->")
-
+(global-set-key [f6] 'next-error)
+(global-set-key [S-f6] 'previous-error)
+(global-set-key [f5] 'recompile)
+(global-set-key [S-f5] 'compile)
 
 
 ;; Mutt support.
@@ -237,16 +196,10 @@
   (interactive)
   (compile (concat "checkpatch.pl --emacs --terse --file " (buffer-file-name))))
 
-
-;; iBuffer
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(autoload 'ibuffer "ibuffer" "List buffers." t)
-
 ;; Mouse
 (global-set-key [mouse-3] 'imenu)
 
 ;; Misc
-(global-set-key [C-tab] "\C-q\t")   ; Control tab quotes a tab.
 (setq backup-by-copying-when-mismatch t)
 
 ;; Treat 'y' or <CR> as yes, 'n' as no.
@@ -293,7 +246,6 @@ in font-lock-auto-mode-list"
     )
   )
 
-(global-set-key [M-f1] 'font-lock-fontify-buffer)
 
 ;; New dabbrev stuff
 ;(require 'new-dabbrev)
@@ -330,8 +282,6 @@ in font-lock-auto-mode-list"
 
 (defun my-c++-mode-hook-common ()
   (setq tab-width c-basic-offset)
-  (define-key c++-mode-map "\C-m" 'reindent-then-newline-and-indent)
-  (define-key c++-mode-map "\C-ce" 'c-comment-edit)
   (setq c++-auto-hungry-initial-state 'none)
   (setq c++-delete-function 'delete-char)
   (setq c++-tab-always-indent t)
@@ -361,8 +311,6 @@ in font-lock-auto-mode-list"
 
 (defun my-c-mode-hook-common ()
   (setq tab-width c-basic-offset)
-  (define-key c-mode-map "\C-m" 'reindent-then-newline-and-indent)
-  (define-key c-mode-map "\C-ce" 'c-comment-edit)
   (setq c-auto-hungry-initial-state 'none)
   (setq c-delete-function 'delete-char)
   (setq c-tab-always-indent t)
@@ -472,18 +420,12 @@ in font-lock-auto-mode-list"
       (add-hook 'find-file-hooks 'font-lock-auto-mode-select)
 
       (setq baud-rate 1000000)
-      (global-set-key "\C-cmm" 'menu-bar-mode)
-      (global-set-key "\C-cms" 'scroll-bar-mode)
-      (global-set-key [backspace] 'backward-delete-char)
-		    ;	   (global-set-key [delete] 'delete-char)
       (standard-display-european t)
       (load-library "iso-transl")))
 
 ;; X11 or PC using direct screen writes
 (if window-system
     (progn
-      ;;      (global-set-key [M-f1] 'hilit-repaint-command)
-      ;;      (global-set-key [M-f2] [?\C-u M-f1])
       (setq hilit-mode-enable-list
 	'(not text-mode c-mode c++-mode emacs-lisp-mode lisp-mode
 	  scheme-mode)
@@ -587,7 +529,6 @@ in font-lock-auto-mode-list"
       (comment-or-uncomment-region (line-beginning-position) (line-end-position))
     (comment-dwim arg)))
 
-(global-set-key "\M-;" 'comment-dwim-line)
 (put 'downcase-region 'disabled nil)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
