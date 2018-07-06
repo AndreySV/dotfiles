@@ -222,9 +222,6 @@
     (setq auto-mode-alist
       (append '(("\\.cpp$" . c++-mode)
 	    ("\\.hpp$" . c++-mode)
-		    ("\\.lsp$" . lisp-mode)
-	    ("\\.scm$" . scheme-mode)
-	    ("\\.pl$" . perl-mode)
 	    ) auto-mode-alist)))
 
 ;; Auto font lock mode
