@@ -27,7 +27,7 @@ alias .........='cd ../../../../../../../..'
 
 
 # Shortcuts
-alias e='ps -ef | grep'
+alias e='$EDITOR'
 alias g='grep'
 alias o='popd'
 alias p='pushd '
