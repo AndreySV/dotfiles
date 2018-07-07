@@ -97,6 +97,7 @@ fi
 # ccache -M 4G
 CCACHE_DIR=~/data/linux/.ccache
 PATH=/usr/lib/ccache:$PATH
+export PATH CCACHE_DIR
 
 export ALTERNATE_EDITOR=""
 export EDITOR="emacsclient --alternate-editor='' -c -nw "
