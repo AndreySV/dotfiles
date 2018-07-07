@@ -100,7 +100,7 @@ PATH=/usr/lib/ccache:$PATH
 export PATH CCACHE_DIR
 
 export ALTERNATE_EDITOR=""
-export EDITOR="emacsclient --alternate-editor='' -c -nw "
+export EDITOR="edit.sh"
 
 # hosts aliases
 export HOSTALIASES=~/.hosts
