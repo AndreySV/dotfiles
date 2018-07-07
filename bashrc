@@ -104,8 +104,8 @@ PATH=/usr/lib/ccache:$PATH
 export PATH
 
 
-export ALTERNATE_EDITOR="emacs --daemon"
-export EDITOR="edit.sh"
+export ALTERNATE_EDITOR=""
+export EDITOR="emacsclient --alternate-editor='' -c -nw "
 
 
 # definitions for Debian tools
