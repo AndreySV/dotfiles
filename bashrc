@@ -101,6 +101,8 @@ PATH=/usr/lib/ccache:$PATH
 export ALTERNATE_EDITOR=""
 export EDITOR="emacsclient --alternate-editor='' -c -nw "
 
+# hosts aliases
+export HOSTALIASES=~/.hosts
 
 # definitions for Debian tools
 DEBEMAIL="andrej.skvortzov@gmail.com"
