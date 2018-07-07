@@ -108,7 +108,13 @@ export ALTERNATE_EDITOR="emacs --daemon"
 export EDITOR="edit.sh"
 
 
+# definitions for Debian tools
+DEBEMAIL="andrej.skvortzov@gmail.com"
+DEBFULLNAME="Andrey Skvortsov"
+export DEBEMAIL DEBFULLNAME
 
+alias dquilt="quilt --quiltrc=${HOME}/.quiltrc-dpkg"
+complete -F _quilt_completion $_quilt_complete_opt dquilt
 
 
 # Alias definitions.
