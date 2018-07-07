@@ -86,25 +86,17 @@ export PS1+='$(__git_ps1 "(git)-[%s] ")\$ '
 unset color_prompt force_color_prompt
 
 
-PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games"
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games":$PATH
+
+# include .profile_path if it exists
+if [ -f "$HOME/.profile_path" ]; then
+    . "$HOME/.profile_path"
 fi
-
-PATH=$PATH:/opt/CodeSourcery/arm-2012.03/bin
-PATH=$PATH:/usr/local/angstrom/arm/bin
-PATH=$PATH:~/bin/usr/autopano
-PATH=$PATH:/opt/x86_64-unknown-linux-gnu/4.8.2/bin/
-export PATH
-
 
 # ccache settings
 # ccache -M 4G
 CCACHE_DIR=~/data/linux/.ccache
 PATH=/usr/lib/ccache:$PATH
-export PATH
-
 
 export ALTERNATE_EDITOR=""
 export EDITOR="emacsclient --alternate-editor='' -c -nw "
