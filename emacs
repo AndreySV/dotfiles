@@ -259,6 +259,7 @@
 (require 'desktop)
 (desktop-save-mode 1)
 (require 'tar-mode)
+(require 'dired)
 
 ;; for isearch-forward, make these equivalent: space newline tab hyphen underscore
 (setq search-whitespace-regexp "[-_ \t\n]+")
