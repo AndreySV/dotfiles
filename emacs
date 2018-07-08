@@ -61,7 +61,6 @@
   :config
   (ido-mode t)
   (ido-everywhere 1)
-  (ido-ubiquitous-mode 1)
   (setq ido-enable-prefix nil
       ido-enable-flex-matching t
       ido-auto-merge-work-directories-length nil
@@ -70,6 +69,12 @@
       ido-use-virtual-buffers t
       ido-handle-duplicate-virtual-buffers 2
       ido-max-prospects 10))
+
+(use-package ido-completing-read+
+  :ensure t
+  :config
+  (ido-ubiquitous-mode 1))
+
 
 ;;
 ;; allows to use ido for completion of commands in M-x,
