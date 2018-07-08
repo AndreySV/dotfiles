@@ -260,6 +260,8 @@
 (desktop-save-mode 1)
 (require 'tar-mode)
 
+;; for isearch-forward, make these equivalent: space newline tab hyphen underscore
+(setq search-whitespace-regexp "[-_ \t\n]+")
 
 ;; Pretty diff mode
 (autoload 'ediff-buffers "ediff" "Intelligent Emacs interface to diff" t)
