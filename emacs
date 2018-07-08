@@ -186,6 +186,8 @@
 (setq backup-directory-alist
       `((".*" . ,emacs-backup-directory)))
 
+(setq backup-by-copying-when-mismatch t)
+
 
 ;;
 ;; autosave
@@ -246,16 +248,15 @@
 ;; Mouse
 (global-set-key [mouse-3] 'imenu)
 
-;; Misc
-(setq backup-by-copying-when-mismatch t)
 
 ;; Treat 'y' or <CR> as yes, 'n' as no.
-(fset 'yes-or-no-p 'y-or-n-p)
-    (define-key query-replace-map [return] 'act)
-    (define-key query-replace-map [?\C-m] 'act)
+(defalias 'yes-or-no-p 'y-or-n-p)
+(define-key query-replace-map [return] 'act)
+(define-key query-replace-map [?\C-m] 'act)
 
 ;; Load packages
 (require 'desktop)
+(desktop-save-mode 1)
 (require 'tar-mode)
 
 
@@ -507,9 +508,6 @@ in font-lock-auto-mode-list"
 ;;  (set-face-background 'default "red")
     )))
 
-
-;; Restore the "desktop" - do this as late as possible
-(desktop-save-mode t)
 
 ;; Indicate that this file has been read at least once
 (setq first-time nil)
