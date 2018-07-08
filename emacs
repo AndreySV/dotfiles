@@ -5,8 +5,9 @@
 (defvar first-time t
   "Flag signifying this is the first time that .emacs has been evaled")
 
+;; UTF-8 as default encoding
 (set-language-environment 'UTF-8)
-
+(set-default-coding-systems 'utf-8)
 
 ;;
 ;; repositories
