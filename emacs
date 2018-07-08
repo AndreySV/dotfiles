@@ -257,7 +257,10 @@
 
 ;; Load packages
 (require 'desktop)
+(setq desktop-save t)			; always save and never ask
+(setq desktop-load-locked-desktop t)	; load even locked desktop, in case emacs crashed
 (desktop-save-mode 1)
+
 (require 'tar-mode)
 (require 'dired)
 
