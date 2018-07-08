@@ -102,11 +102,53 @@
    x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)
    x-stretch-cursor t))
 
+;;
+;; git support
+(use-package magit
+  :ensure t)
 
+;;
+;; similar to magit packages for mercurial
+(use-package monky
+  :ensure t)
+
+;;
+;; minor mode for editing parentheses
+(use-package paredit
+  :ensure t)
+
+;;
+;; quickly find any file in a given project
+(use-package find-file-in-project
+  :ensure t)
+
+;;
+;; highlight all occurences in the buffer of
+;; the word under the point
+(use-package idle-highlight-mode
+  :ensure t)
+
+;;
+;; package to recevie PATH and some other env variables
+;; from shell, so compile and shell-command work like expected
+(use-package exec-path-from-shell
+  :ensure t
+  :init
+  (exec-path-from-shell-initialize))
+
+(use-package solarized-theme
+  :ensure t)
+
+
+
+;;
+;; Keybindings
 (global-set-key [f6] 'next-error)
 (global-set-key [S-f6] 'previous-error)
 (global-set-key [f5] 'recompile)
 (global-set-key [S-f5] 'compile)
+
+
 
 
 ;; Mutt support.
@@ -544,7 +586,7 @@ in font-lock-auto-mode-list"
  '(frame-background-mode (quote dark))
  '(package-selected-packages
    (quote
-    (use-package find-file-in-project idle-highlight-mode ido-ubiquitous paredit smex solarized-theme magit xclip pymacs monky exec-path-from-shell)))
+    (ido-completing-read+ use-package find-file-in-project idle-highlight-mode ido-ubiquitous paredit smex solarized-theme magit xclip monky exec-path-from-shell)))
  '(safe-local-variable-values
    (quote
     ((whitespace-line-column . 80)
