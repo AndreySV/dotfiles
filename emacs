@@ -415,9 +415,8 @@
 (setq mark-even-if-inactive t)
 (setq visible-bell nil)
 (setq next-line-add-newlines nil)
+(setq suggest-key-bindings t)
 
-
-(setq suggest-key-bindings nil)
 (put 'eval-expression 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
