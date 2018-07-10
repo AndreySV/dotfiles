@@ -417,10 +417,6 @@
 (setq next-line-add-newlines nil)
 (setq suggest-key-bindings t)
 
-(put 'eval-expression 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
-(put 'set-goal-column 'disabled nil)
-
 
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f" ("%b")))
