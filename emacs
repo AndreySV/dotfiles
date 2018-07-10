@@ -502,7 +502,7 @@
  '(frame-background-mode (quote dark))
  '(package-selected-packages
    (quote
-    (ido-completing-read+ use-package find-file-in-project idle-highlight-mode ido-ubiquitous paredit smex solarized-theme magit xclip monky exec-path-from-shell)))
+    (jedi epc ac-c-headers ac-etags projectile auto-complete ido-completing-read+ use-package find-file-in-project idle-highlight-mode ido-ubiquitous paredit smex solarized-theme magit xclip monky exec-path-from-shell)))
  '(safe-local-variable-values
    (quote
     ((whitespace-line-column . 80)
