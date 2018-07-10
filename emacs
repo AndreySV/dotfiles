@@ -284,39 +284,6 @@
 ;; for isearch-forward, make these equivalent: space newline tab hyphen underscore
 (setq search-whitespace-regexp "[-_ \t\n]+")
 
-;; Pretty diff mode
-(autoload 'ediff-buffers "ediff" "Intelligent Emacs interface to diff" t)
-(autoload 'ediff-files "ediff" "Intelligent Emacs interface to diff" t)
-(autoload 'ediff-files-remote "ediff"
-  "Intelligent Emacs interface to diff")
-
-(if first-time
-    (setq auto-mode-alist
-      (append '(("\\.cpp$" . c++-mode)
-	    ("\\.hpp$" . c++-mode)
-	    ) auto-mode-alist)))
-
-;; New dabbrev stuff
-;(require 'new-dabbrev)
-(setq dabbrev-always-check-other-buffers t)
-(setq dabbrev-abbrev-char-regexp "\\sw\\|\\s_")
-(add-hook 'emacs-lisp-mode-hook
-      '(lambda ()
-	 (set (make-local-variable 'dabbrev-case-fold-search) nil)
-	 (set (make-local-variable 'dabbrev-case-replace) nil)))
-(add-hook 'c-mode-hook
-      '(lambda ()
-	 (set (make-local-variable 'dabbrev-case-fold-search) nil)
-	 (set (make-local-variable 'dabbrev-case-replace) nil)))
-(add-hook 'text-mode-hook
-      '(lambda ()
-	 (set (make-local-variable 'dabbrev-case-fold-search) t)
-	 (set (make-local-variable 'dabbrev-case-replace) t)))
-
-
-
-
-
 
 ;;
 ;; C++ mode
@@ -455,12 +422,6 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 
-;; Elisp archive searching
-(autoload 'format-lisp-code-directory "lispdir" nil t)
-(autoload 'lisp-dir-apropos "lispdir" nil t)
-(autoload 'lisp-dir-retrieve "lispdir" nil t)
-(autoload 'lisp-dir-verify "lispdir" nil t)
-
 
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f" ("%b")))
@@ -472,44 +433,11 @@
   (blink-cursor-mode -1))
 
 
-;; X11 or PC using direct screen writes
-(if window-system
-    (progn
-      (setq hilit-mode-enable-list
-	'(not text-mode c-mode c++-mode emacs-lisp-mode lisp-mode
-	  scheme-mode)
-	hilit-auto-highlight nil
-	hilit-auto-rehighlight 'visible
-	hilit-inhibit-hooks nil
-	hilit-inhibit-rebinding t)
-      (require 'hilit19)
-      (require 'paren))
-  (setq baud-rate 2400)		; For slow serial connections
-  )
-
-;; TTY type terminal
-(if (and (not window-system)
-     (not (equal system-type 'ms-dos)))
-    (progn
-      (if first-time
-      (progn
-	(keyboard-translate ?\C-h ?\C-?)
-	(keyboard-translate ?\C-? ?\C-h)))))
-
 ;; Under UNIX
 (if (not (equal system-type 'ms-dos))
     (progn
       (if first-time
       (server-start))))
-
-;; Add any face changes here
-(add-hook 'term-setup-hook 'my-term-setup-hook)
-(defun my-term-setup-hook ()
-  (if (eq window-system 'pc)
-      (progn
-;;  (set-face-background 'default "red")
-    )))
-
 
 ;; Indicate that this file has been read at least once
 (setq first-time nil)
