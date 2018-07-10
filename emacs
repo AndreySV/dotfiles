@@ -225,7 +225,7 @@
 ;; autosave
 
 ;; path for autosave files
-(setq emacs-autosave-directory (concat user-emacs-directory "autosave"))
+(setq emacs-autosave-directory (concat user-emacs-directory "autosave/"))
 
 ;; autocreate directory for autosave
 (if (not (file-exists-p emacs-autosave-directory))
