@@ -319,20 +319,11 @@ in font-lock-auto-mode-list"
 
 
 
-;; C++ and C mode...
- (setq c-default-style "bsd"
-      c-basic-offset 8)
-
-(defun c-lineup-arglist-tabs-only (ignored)
-  "Line up argument lists by tabs, not spaces"
-  (let* ((anchor (c-langelem-pos c-syntactic-element))
-	  (column (c-langelem-2nd-pos c-syntactic-element))
-	   (offset (- (1+ column) anchor))
-	    (steps (floor offset c-basic-offset)))
-    (* (max steps 1)
-       c-basic-offset)))
 
 
+
+;;
+;; C++ mode
 (defun my-c++-mode-hook-common ()
   (setq tab-width c-basic-offset)
   (setq c++-auto-hungry-initial-state 'none)
@@ -357,7 +348,41 @@ in font-lock-auto-mode-list"
   (setq indent-tabs-mode nil)
 )
 
+(add-hook 'c++-mode-hook 'my-c++-mode-hook-tabs)
 
+
+;;
+;; C mode
+(setq c-default-style "bsd"
+      c-basic-offset 8)
+
+(defun c-lineup-arglist-tabs-only (ignored)
+  "Line up argument lists by tabs, not spaces"
+  (let* ((anchor (c-langelem-pos c-syntactic-element))
+	  (column (c-langelem-2nd-pos c-syntactic-element))
+	   (offset (- (1+ column) anchor))
+	    (steps (floor offset c-basic-offset)))
+    (* (max steps 1)
+       c-basic-offset)))
+
+(use-package ac-etags
+  :ensure t
+  :config
+  (setq ac-etags-requires 1)
+  :init
+  (ac-etags-setup)
+  (add-hook 'c-mode-hook
+	    (lambda ()
+	      (add-to-list 'ac-sources 'ac-source-etags))))
+
+
+(use-package ac-c-headers
+  :ensure t
+  :config
+  (add-hook 'c-mode-hook
+	    (lambda ()
+	      (add-to-list 'ac-sources 'ac-source-c-headers)
+              (add-to-list 'ac-sources 'ac-source-c-header-symbols t))))
 
 
 
@@ -404,9 +429,6 @@ in font-lock-auto-mode-list"
   (c-set-style "linux")
 )
 
-
-;; Add all of the hooks...
-(add-hook 'c++-mode-hook 'my-c++-mode-hook-tabs)
 (add-hook 'c-mode-hook 'my-c-mode-hook-tabs)
 ;; (add-hook 'c-mode-hook 'my-c-mode-hook-spaces)
 
