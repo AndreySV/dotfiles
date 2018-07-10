@@ -36,6 +36,7 @@
   :init
   ;; no control binding will be touched by xah-fly-keys
   (setq xah-fly-use-control-key nil) ; must come before loading xah-fly-keys
+  (setq xah-fly-use-meta-key nil) ; must come before loading xah-fly-keys
 
   :config
   (xah-fly-keys-set-layout "qwerty") ; required if you use qwerty
