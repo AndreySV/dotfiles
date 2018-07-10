@@ -161,11 +161,25 @@
 
 ;;
 ;; Keybindings
-(global-set-key [f6] 'next-error)
+(global-set-key [f6]   'next-error)
 (global-set-key [S-f6] 'previous-error)
-(global-set-key [f5] 'recompile)
+(global-set-key [f5]   'recompile)
 (global-set-key [S-f5] 'compile)
 
+
+;; Complement to next-error
+(defun previous-error (n)
+  "Visit previous compilation error message and corresponding source code."
+  (interactive "p")
+  (next-error (- n)))
+
+(defun recompile()
+  "default recompile function. It will be changed after the first call of compile function."
+  (interactive)
+  (compile compile-command))
+
+;; set default compile command
+(setq compile-command "make")
 
 
 
@@ -267,12 +281,30 @@
 (global-set-key [mouse-3] 'imenu)
 
 
+;; Misc...
+(transient-mark-mode 1)
+(setq mark-even-if-inactive t)
+(setq visible-bell nil)
+(setq next-line-add-newlines nil)
+(setq suggest-key-bindings t)
+
+;; Appearance
+(when window-system
+  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
+  (tooltip-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (mouse-wheel-mode t)
+  (blink-cursor-mode -1))
+(menu-bar-mode -1)
+
 ;; Treat 'y' or <CR> as yes, 'n' as no.
 (defalias 'yes-or-no-p 'y-or-n-p)
 (define-key query-replace-map [return] 'act)
 (define-key query-replace-map [?\C-m] 'act)
 
-;; Load packages
+;;
+;; Load/Save emacs session (openned files) and restore buffers
 (require 'desktop)
 (setq desktop-save t)			; always save and never ask
 (setq desktop-load-locked-desktop t)	; load even locked desktop, in case emacs crashed
@@ -348,8 +380,6 @@
               (add-to-list 'ac-sources 'ac-source-c-header-symbols t))))
 
 
-
-
 (defun my-c-mode-hook-common ()
   (setq tab-width c-basic-offset)
   (setq c-auto-hungry-initial-state 'none)
@@ -395,37 +425,6 @@
 (add-hook 'c-mode-hook 'my-c-mode-hook-tabs)
 ;; (add-hook 'c-mode-hook 'my-c-mode-hook-spaces)
 
-;; Complement to next-error
-(defun previous-error (n)
-  "Visit previous compilation error message and corresponding source code."
-  (interactive "p")
-  (next-error (- n)))
-
-(defun recompile()
-  "default recompile function. It will be changed after the first call of compile function."
-  (interactive)
-  (compile compile-command))
-
-;; set default compile command
-(setq compile-command "make")
-
-
-;; Misc...
-(transient-mark-mode 1)
-(setq mark-even-if-inactive t)
-(setq visible-bell nil)
-(setq next-line-add-newlines nil)
-(setq suggest-key-bindings t)
-
-
-(when window-system
-  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
-  (tooltip-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (mouse-wheel-mode t)
-  (blink-cursor-mode -1))
-(menu-bar-mode -1)
 
 
 ;; Under UNIX
@@ -446,6 +445,9 @@
 
 
 
+
+;;
+;; user's helper functions
 (defun dos2unix (buffer)
   "Automate M-% C-q C-m RET C-q C-j RET"
   (interactive "*b")
