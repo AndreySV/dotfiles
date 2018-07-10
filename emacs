@@ -296,26 +296,6 @@
 	    ("\\.hpp$" . c++-mode)
 	    ) auto-mode-alist)))
 
-;; Auto font lock mode
-(defvar font-lock-auto-mode-list
-  (list 'c-mode 'c++-mode 'c++-c-mode 'emacs-lisp-mode 'lisp-mode 'perl-mode 'scheme-mode)
-  "List of modes to always start in font-lock-mode")
-
-(defvar font-lock-mode-keyword-alist
-  '((c++-c-mode . c-font-lock-keywords)
-    (perl-mode . perl-font-lock-keywords))
-  "Associations between modes and keywords")
-
-(defun font-lock-auto-mode-select ()
-  "Automatically select font-lock-mode if the current major mode is
-in font-lock-auto-mode-list"
-  (if (memq major-mode font-lock-auto-mode-list)
-      (progn
-    (font-lock-mode t))
-    )
-  )
-
-
 ;; New dabbrev stuff
 ;(require 'new-dabbrev)
 (setq dabbrev-always-check-other-buffers t)
@@ -481,14 +461,6 @@ in font-lock-auto-mode-list"
 (autoload 'lisp-dir-retrieve "lispdir" nil t)
 (autoload 'lisp-dir-verify "lispdir" nil t)
 
-;; Font lock mode
-(defun my-make-face (face colour &optional bold)
-  "Create a face from a colour and optionally make it bold"
-  (make-face face)
-  (copy-face 'default face)
-  (set-face-foreground face colour)
-  (if bold (make-face-bold face))
-  )
 
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f" ("%b")))
@@ -499,22 +471,6 @@ in font-lock-auto-mode-list"
   (mouse-wheel-mode t)
   (blink-cursor-mode -1))
 
-(if (eq window-system 'x)
-    (progn
-      (my-make-face 'blue "blue")
-      (my-make-face 'red "red")
-      (my-make-face 'green "dark green")
-      (setq font-lock-comment-face 'blue)
-      (setq font-lock-string-face 'bold)
-      (setq font-lock-type-face 'bold)
-      (setq font-lock-keyword-face 'bold)
-      (setq font-lock-function-name-face 'red)
-      (setq font-lock-doc-string-face 'green)
-      (add-hook 'find-file-hooks 'font-lock-auto-mode-select)
-
-      (setq baud-rate 1000000)
-      (standard-display-european t)
-      (load-library "iso-transl")))
 
 ;; X11 or PC using direct screen writes
 (if window-system
