@@ -104,6 +104,15 @@
    x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)
    x-stretch-cursor t))
 
+
+;;
+;; auto completion
+(use-package auto-complete
+  :ensure t
+  :config
+  (ac-config-default))
+
+
 ;;
 ;; git support
 (use-package magit
