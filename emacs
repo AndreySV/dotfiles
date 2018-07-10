@@ -124,6 +124,13 @@
   :ensure t)
 
 ;;
+;; manage and navigate projects easily
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-mode 1))
+
+;;
 ;; minor mode for editing parentheses
 (use-package paredit
   :ensure t)
