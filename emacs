@@ -473,6 +473,93 @@
 
 
 
+;;
+;; Python mode
+
+;; external python packages are required to use jedi
+;;
+;; For Debian GNU/Linux systems these are:
+;; apt-get install python-sexpdata python-epc python-jedi
+;;
+(use-package jedi
+  :ensure t
+  :config
+
+  ;; Global Jedi config vars
+
+  (defvar jedi-config:use-system-python nil
+    "Will use system python and active environment for Jedi server.
+    May be necessary for some GUI environments (e.g., Mac OS X)")
+
+  (defvar jedi-config:with-virtualenv nil
+    "Set to non-nil to point to a particular virtualenv.")
+
+  (defvar jedi-config:vcs-root-sentinel '(".hg" ".git"))
+
+  (defvar jedi-config:python-module-sentinel "__init__.py")
+
+  ;; (Many) config helpers follow
+
+  ;; Alternative methods of finding the current project root
+  ;; Method 1: basic
+  (defun get-project-root (buf repo-files &optional init-file)
+    "Just uses the vc-find-root function to figure out the project root.
+       Won't always work for some directory layouts."
+    (let* ((buf-dir (expand-file-name (file-name-directory (buffer-file-name buf))))
+	   (project-root nil))
+      (progn
+	(dolist (repo-file repo-files)
+	  (setq project-root (vc-find-root buf-dir repo-file))
+	  (when project-root (return)))
+	(if project-root
+	    (expand-file-name project-root)
+	  nil))))
+
+  ;; Set this variable to find project root
+  (defvar jedi-config:find-root-function 'get-project-root)
+
+  (defun current-buffer-project-root ()
+    (funcall jedi-config:find-root-function
+	     (current-buffer)
+	     jedi-config:vcs-root-sentinel
+	     jedi-config:python-module-sentinel))
+
+  (defun jedi-config:setup-server-args ()
+    ;; little helper macro for building the arglist
+    (defmacro add-args (arg-list arg-name arg-value)
+      `(setq ,arg-list (append ,arg-list (list ,arg-name ,arg-value))))
+    ;; and now define the args
+    (let ((project-root (current-buffer-project-root)))
+
+      (make-local-variable 'jedi:server-args)
+
+      (when project-root
+	(message (format "Adding system path: %s" project-root))
+	(add-args jedi:server-args "--sys-path" project-root))
+
+      (when jedi-config:with-virtualenv
+	(message (format "Adding virtualenv: %s" jedi-config:with-virtualenv))
+	(add-args jedi:server-args "--virtual-env" jedi-config:with-virtualenv))))
+
+  ;; Hook up to auto-complete
+  (add-to-list `ac-sources `ac-source-jedi-direct)
+  ;; Enable for python-mode
+  (add-hook `python-mode-hook `jedi:setup)
+  ;; Buffer-specific server options
+  (add-hook 'python-mode-hook 'jedi-config:setup-server-args)
+  ;; Start completion at method dot
+  (setq jedi:complete-on-dot t)
+  )
+
+
+;;
+;; Sedona language
+(if first-time
+    (setq auto-mode-alist
+      (append '(("\\.sedona$" . c++-mode)
+	    ) auto-mode-alist)))
+
+
 ;; Under UNIX
 (if (not (equal system-type 'ms-dos))
     (progn
