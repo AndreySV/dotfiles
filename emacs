@@ -10,6 +10,30 @@
 (set-default-coding-systems 'utf-8)
 
 ;;
+;; A secure Emacs environment
+(setq tls-checktrust t)
+(setq gnutls-verify-error t)
+;; gnutls-trustfile is already set to correct value in Debian GNU/Linux
+;; (setq gnutls-trustfiles (list trustfile))
+
+;; Test the settings by using the following code snippet:
+;; (let ((bad-hosts
+;;        (loop for bad
+;;              in `("https://wrong.host.badssl.com/"
+;;                   "https://self-signed.badssl.com/")
+;;              if (condition-case e
+;;                     (url-retrieve
+;;                      bad (lambda (retrieved) t))
+;;                   (error nil))
+;;              collect bad)))
+;;   (if bad-hosts
+;;       (error (format "tls misconfigured; retrieved %s ok"
+;;                      bad-hosts))
+;;     (url-retrieve "https://badssl.com"
+;;                   (lambda (retrieved) t))))
+
+
+;;
 ;; repositories
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
