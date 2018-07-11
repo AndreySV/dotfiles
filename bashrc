@@ -132,3 +132,8 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 umask 0022
+
+# load host specific bash settings
+if [ -f ~/.bashrc_host ]; then
+    . ~/.bashrc_host
+fi
