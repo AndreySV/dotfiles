@@ -164,6 +164,11 @@
   :ensure t)
 
 ;;
+;; increase selected region by semantic units.
+(use-package expand-region
+  :ensure t)
+
+;;
 ;; quickly find any file in a given project
 (use-package find-file-in-project
   :ensure t)
