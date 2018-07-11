@@ -349,6 +349,19 @@
 ;; for isearch-forward, make these equivalent: space newline tab hyphen underscore
 (setq search-whitespace-regexp "[-_ \t\n]+")
 
+;;
+;; Text mode
+
+;; automatically break lines at spaces
+;; when the line becomes too wide.
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+;;
+;; enable spellchecker
+(eval-after-load "ispell"
+  '(when (executable-find ispell-program-name)
+     (add-hook 'text-mode-hook 'turn-on-flyspell)))
+
 
 ;;
 ;; C++ mode
