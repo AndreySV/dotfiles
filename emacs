@@ -28,6 +28,10 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;;
+;; Customize settings
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(load custom-file :noerror)
 
 ;;
 ;; setup ergonomic keybindings
@@ -483,30 +487,3 @@
   (if (equal (read-char-choice "Is diff correct? <n/Y>" '(?n ?y)) '?y)
       (shell-command "cvs commit -m '(Russian) Proofread translation'"))
   )
-
-
-;;
-;; Customize settings
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(compilation-scroll-output (quote first-error))
- '(custom-safe-themes
-   (quote
-    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
- '(frame-background-mode (quote dark))
- '(package-selected-packages
-   (quote
-    (jedi epc ac-c-headers ac-etags projectile auto-complete ido-completing-read+ use-package find-file-in-project idle-highlight-mode ido-ubiquitous paredit smex solarized-theme magit xclip monky exec-path-from-shell)))
- '(safe-local-variable-values
-   (quote
-    ((whitespace-line-column . 80)
-     (lexical-binding . t)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
