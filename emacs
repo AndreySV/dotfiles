@@ -168,6 +168,10 @@
 (use-package paredit
   :ensure t)
 
+;; typing an open parenthesis automatically inserts
+;; the corresponding closing parenthesis
+(electric-pair-mode t)
+
 ;;
 ;; increase selected region by semantic units.
 (use-package expand-region
