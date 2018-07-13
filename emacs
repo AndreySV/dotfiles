@@ -323,6 +323,7 @@
 (transient-mark-mode 1)
 (setq mark-even-if-inactive t)
 (setq visible-bell nil)
+(setq ring-bell-function 'ignore)
 (setq next-line-add-newlines nil)
 (setq suggest-key-bindings t)
 
