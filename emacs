@@ -228,6 +228,10 @@
 ;; Mutt support.
 (setq auto-mode-alist (append '(("/tmp/mutt.*" . mail-mode)) auto-mode-alist))
 
+;; Move to trash when deleting files
+(setq delete-by-moving-to-trash t)
+
+
 ;;
 ;; backups
 (setq backup-by-copying t)		; make backups by copying
