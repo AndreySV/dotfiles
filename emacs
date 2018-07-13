@@ -234,13 +234,16 @@
 
 ;;
 ;; backups
-(setq backup-by-copying t)		; make backups by copying
-(setq vc-make-backup-files t)		; make backup files even for files
+(setq make-backup-files t               ; backup of a file the first time it is saved.
+      backup-by-copying t               ; don't clobber symlinks
+      version-control t                 ; version numbers for backup files
+      vc-make-backup-files t		; make backup files even for files
 					; covered by version control
-(setq delete-old-versions t
-  kept-new-versions 6
-  kept-old-versions 4
-  version-control t)
+      delete-old-versions t             ; delete excess backup files silently
+      delete-by-moving-to-trash t
+      kept-old-versions 6               ; oldest versions to keep when a new numbered backup is made (default: 2)
+      kept-new-versions 9               ; newest versions to keep when a new numbered backup is made (default: 2)
+      )
 
 ;; path for backup files
 (setq emacs-backup-directory (concat user-emacs-directory "backup"))
@@ -269,6 +272,9 @@
 
 ;;
 ;; autosave
+(setq auto-save-default t               ; auto-save every buffer that visits a file
+      auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
+      auto-save-interval 200)           ; number of keystrokes between auto-saves (default: 300)
 
 ;; path for autosave files
 (setq emacs-autosave-directory (concat user-emacs-directory "autosave/"))
