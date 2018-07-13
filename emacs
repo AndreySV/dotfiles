@@ -144,12 +144,17 @@
 ;;
 ;; git support
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config
+    (global-set-key (kbd "C-c m") 'magit-status))
+
 
 ;;
 ;; similar to magit packages for mercurial
 (use-package monky
-  :ensure t)
+  :ensure t
+  :config
+  (global-set-key (kbd "C-c o") 'monky-status))
 
 ;;
 ;; manage and navigate projects easily
