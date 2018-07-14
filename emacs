@@ -200,6 +200,12 @@
   :ensure t)
 
 
+;;
+;; automatically enable following commands
+;; don't ask questions on first run of these commands
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
 
 ;;
 ;; Keybindings
