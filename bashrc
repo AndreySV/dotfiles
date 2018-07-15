@@ -25,7 +25,7 @@ esac
 export HISTCONTROL=ignoreboth:erasedups
 export HISTSIZE=10000
 export HISTFILESIZE=$HISTSIZE
-export HISTIGNORE="&:[ ]*:exit:ls:cd ..:make:* --help:"
+export HISTIGNORE="&:[ ]*:exit:ls:cd ..:make:"
 export HISTTIMEFORMAT="%h %d %H:%M:%S >  "
 
 # Append to the Bash history file, rather than overwriting it
