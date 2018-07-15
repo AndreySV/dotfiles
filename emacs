@@ -143,7 +143,7 @@
 (use-package magit
   :ensure t
   :config
-    (global-set-key (kbd "C-c m") 'magit-status))
+    (global-set-key (kbd "C-c a") 'magit-status))
 
 
 ;;
