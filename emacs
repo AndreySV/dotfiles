@@ -69,10 +69,7 @@
   :config
   (xah-fly-keys-set-layout "qwerty") ; required if you use qwerty
 
-  (xah-fly-keys 1)
-
-  ;; Make Escape Key Do C-g
-  (define-key key-translation-map (kbd "ESC") (kbd "C-g")))
+  (xah-fly-keys 1))
 
 
 ;;
