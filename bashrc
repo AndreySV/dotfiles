@@ -128,6 +128,9 @@ fi
 
 umask 0022
 
+# for pythonbrew
+[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
+
 # load host specific bash settings
 if [ -f ~/.bashrc_host ]; then
     . ~/.bashrc_host
