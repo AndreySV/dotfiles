@@ -88,11 +88,6 @@ export PS1+='$(__git_ps1 "(git)-[%s] ")\$ '
 unset color_prompt force_color_prompt
 
 
-# include .profile_path if it exists
-if [ -f "$HOME/.profile_path" ]; then
-    . "$HOME/.profile_path"
-fi
-
 # ccache settings
 # ccache -M 4G
 CCACHE_DIR=~/data/linux/.ccache
