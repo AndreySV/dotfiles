@@ -194,7 +194,9 @@
   (exec-path-from-shell-initialize))
 
 (use-package solarized-theme
-  :ensure t)
+  :ensure t
+  :config
+  (customize-set-variable 'frame-background-mode 'dark))
 
 
 ;;
