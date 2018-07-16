@@ -23,7 +23,7 @@ esac
 # ... and ignore same sucessive entries.
 #export HISTCONTROL=ignoreboth
 export HISTCONTROL=ignoreboth:erasedups
-export HISTSIZE=10000
+export HISTSIZE=100000
 export HISTFILESIZE=$HISTSIZE
 export HISTIGNORE="&:[ ]*:exit:ls:cd ..:make:"
 export HISTTIMEFORMAT="%h %d %H:%M:%S >  "
