@@ -579,9 +579,64 @@
 
 ;;
 ;; Sedona language
+
+(defun my-sedona-font-lock-keywords ()
+  "Sets up keywords used in sedona language for highlighting in sedona-mode"
+  (let* (
+	 ;; define several category of keywords
+	 (x-keywords '("abstract" "extends" "property" "internal" "define" "virtual" "override" "super" "inline" "action"))
+	 ;; (x-keywords '("abstract"))
+	 (x-types '("Str" "bool" "App" ))
+	 (x-constants '(""))
+	 (x-functions '(""))
+
+	 ;; generate regex string for each category of keywords
+	 (x-keywords-regexp  (regexp-opt x-keywords  'words))
+	 (x-types-regexp     (regexp-opt x-types     'words))
+	 (x-constants-regexp (regexp-opt x-constants 'words))
+	 (x-functions-regexp (regexp-opt x-functions 'words)))
+
+    (font-lock-add-keywords 'my-sedona-mode (list (append (list x-keywords-regexp)     font-lock-keyword-face)))
+    (font-lock-add-keywords 'my-sedona-mode (list (append (list x-types-regexp)        font-lock-type-face)))
+    (font-lock-add-keywords 'my-sedona-mode (list (append (list x-constants-regexp)    font-lock-constant-face)))
+    (font-lock-add-keywords 'my-sedona-mode (list (append (list x-functions-regexp)    font-lock-function-name-face)))
+    ))
+
+
+(defun my-sedona-mode-hook-spaces ()
+  "Setup indention according to codestyle guidelines for Sedona language"
+  (setq c-basic-offset 2)
+  (setq tab-width c-basic-offset)
+  (setq c++-auto-hungry-initial-state 'none)
+  (setq c++-delete-function 'delete-char)
+  (setq c++-tab-always-indent nil)
+  (setq c-indent-level tab-width)
+
+  (setq c-continued-statement-offset 0)
+  (setq c++-empty-arglist-indent tab-width)
+  (c-set-offset 'case-label '+)		; indent case lagels by
+					; c-indent-level, too
+
+  (setq indent-tabs-mode nil)
+)
+
+
+(define-derived-mode my-sedona-mode java-mode "sedona"
+  "major mode for editing sedona language code."
+
+  (setq comment-start "\\\*\\\*")
+  (font-lock-add-keywords 'my-sedona-mode '(("#.+" . font-lock-comment-face)))
+  (font-lock-add-keywords 'my-sedona-mode '(("\\\*\\\*.*" . font-lock-comment-face)))
+  (my-sedona-font-lock-keywords)
+  )
+
+
+(add-hook 'my-sedona-mode-hook 'my-sedona-mode-hook-spaces)
+
+
 (if first-time
     (setq auto-mode-alist
-      (append '(("\\.sedona$" . c++-mode)
+      (append '(("\\.sedona$" . my-sedona-mode)
 	    ) auto-mode-alist)))
 
 
