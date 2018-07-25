@@ -220,11 +220,6 @@
   (interactive "p")
   (next-error (- n)))
 
-(defun recompile()
-  "default recompile function. It will be changed after the first call of compile function."
-  (interactive)
-  (compile compile-command))
-
 ;; set default compile command
 (setq compile-command "make")
 
