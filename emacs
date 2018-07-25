@@ -222,6 +222,7 @@
 
 ;; set default compile command
 (setq compile-command "make")
+(setq compilation-scroll-output (quote first-error))
 
 
 
