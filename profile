@@ -37,6 +37,6 @@ if [ -f "$HOME/.profile_path" ]; then
     . "$HOME/.profile_path"
 fi
 
-PATH=/sbin:$PATH
+PATH=/sbin:/usr/sbin:$PATH
 export PATH
 
