@@ -210,8 +210,8 @@
 ;; Keybindings
 (global-set-key [f6]   'next-error)
 (global-set-key [S-f6] 'previous-error)
-(global-set-key [f5]   'recompile)
-(global-set-key [S-f5] 'compile)
+(global-set-key [f7]   'recompile)
+(global-set-key [S-f7] 'compile)
 
 
 ;; Complement to next-error
