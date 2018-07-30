@@ -45,7 +45,7 @@
   (when (< emacs-major-version 24)
     ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/"))))
-  (add-to-list 'package-archives '("marmalade" . (concat proto "://marmalade-repo.org/packages/")) t))
+  (add-to-list 'package-archives '("marmalade" . (concat "http" "://marmalade-repo.org/packages/")) t))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
