@@ -324,6 +324,9 @@
 ;; Highlight matching parentheses when the point is on them.
 (show-paren-mode 1)
 
+;; Always show line and column numbers
+(setq line-number-mode t)
+(setq column-number-mode t)
 
 ;; checkpatch for C source files
 (defun checkpatch()
