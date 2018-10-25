@@ -35,6 +35,10 @@ shopt -s histappend
 UPDATE_HISTORY_COMMAND="history -a; history -c; history -r"
 export PROMPT_COMMAND="$UPDATE_HISTORY_COMMAND; $PROMPT_COMMAND"
 
+# optimize command history from time to time to keep it small
+tmpfile=$(mktemp)
+tac $HISTFILE | awk '!x[$0]++' | tac > $tmpfile && cat $tmpfile > $HISTFILE
+rm $tmpfile
 
 
 # disable XON/XOFF control for terminal. 
