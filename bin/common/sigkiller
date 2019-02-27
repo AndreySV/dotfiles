@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# sigkiller: delete last foreign signatur when quoting mails
+#            (foreign dashes = "> -- " or "> --"
+#
+# Markus Muss
+#
+awk '{if ($0 ~ /^> -- ?$/) {
+         while ($0 !~ /^-- $/) {
+            getline
+         }
+      print " " > OUTFILE
+     }
+     print $0 > OUTFILE
+  }' OUTFILE=$1.out $1
+mv $1.out $1
