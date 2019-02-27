@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Usage: debdiffconf.sh FILE
+# Produce on stdout diff of FILE against the first installed Debian package
+# found that provides it.
+# Returns the exit code of diff if everything worked, 3 or 4 otherwise.
+
+# http://stackoverflow.com/a/4785518
+command -v apt-get >/dev/null 2>&1 || {
+  echo "apt-get not found, this is probably not a Debian system. Aborting." >&2;
+  exit 4; }
+command -v apt-file >/dev/null 2>&1 || {
+  echo "Please install apt-file: sudo apt-get install apt-file. Aborting." >&2;
+  exit 4; }
+command -v realpath >/dev/null 2>&1 || {
+  echo "Please install realpath: sudo apt-get install realpath. Aborting." >&2;
+  exit 4; }
+
+FILE=$(realpath -m "$1")
+while read PACKAGE
+do
+  # verify from first installed package
+  if dpkg-query -W --showformat='${Status}\n' | grep installed > /dev/null
+  then
+    DIR=$(mktemp -d)
+    cd "$DIR"
+    echo "Trying $PACKAGE..." >&2
+    apt-get download "$PACKAGE" >&2
+    # downloaded archive is the only file present...
+    ARCHIVE=$(ls)
+    mkdir contents
+    # extract entire archive
+    dpkg-deb -x "$ARCHIVE" contents/ >&2
+    if [ -f "contents$FILE" ]
+    then
+      # package contained required file
+      diff "contents$FILE" "$FILE"
+      RET=$?
+      # cleanup
+      cd
+      rm -Rf "$DIR"
+      # exit entire script as this is the main shell
+      # with the return code from diff
+      exit $RET
+    else
+      # cleanup
+      cd
+      rm -Rf "$DIR"
+    fi
+  fi
+done < <(apt-file -l search "$FILE")
+# if we are here, it means we have found no suitable package
+echo "Could not find original package for $FILE" >&2
+exit 3
+
