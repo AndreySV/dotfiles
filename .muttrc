@@ -1,0 +1,199 @@
+# -*- sh -*-
+
+set from="andrej.skvortzov@gmail.com"
+set realname="Andrey Skvortsov"
+
+#
+# Settings for using mutt+offlineimap+smtp
+#
+set mbox_type=Maildir
+set folder=~/data/.offlineimap_data/gmail
+
+# use wrapper script to collect outgoing addresses
+# set sendmail=/usr/bin/msmtp
+set sendmail=msmtp-lbdb.sh
+
+#------------------------------------------------------
+# general mail options
+#------------------------------------------------------
+set spoolfile="+INBOX"
+set postponed="+[Gmail].Drafts"#
+set trash="+[Gmail].Trash"
+
+# gmail save copies in 'Sent Mail' automatically
+set record="+[Gmail].Sent Mail"
+unset record
+
+# mailboxes to show in the sidebar
+mailboxes +FOSS \
+          +Work \
+          +[Gmail].Spam \
+          +INBOX \
+          +personal
+
+
+# sidebar
+set sidebar_visible=no
+macro index b '<enter-command>toggle sidebar_visible<enter>'
+macro pager b '<enter-command>toggle sidebar_visible<enter>'
+bind index \CP sidebar-prev
+bind index \CN sidebar-next
+bind index \CO sidebar-open
+bind pager \CP sidebar-prev
+bind pager \CN sidebar-next
+bind pager \CO sidebar-open
+color sidebar_new yellow default
+set sidebar_width=15
+set sidebar_divider_char=' │'
+
+
+#
+# mail options
+#
+# don't quote signatures in the answer
+set editor="sigkiller %s; awk '/^$/ {print i+2; exit} {i++}' %s; edit.sh %s"
+
+set mail_check=180
+set envelope_from
+
+# By default Mutt will ask to confirm the recipient and the subject
+# when you reply to an e-mail. It will also ask if you want to include
+# the original mail in your answer. If you assume you will always stick
+# to the default values, you can set up Mutt to skip these questions
+set fast_reply=yes
+set include=yes
+
+#
+# confirmations
+#
+unset move      # gmail does that
+set quit        # don't ask, just do
+
+#
+# sort/threading
+#
+set sort='threads'
+set sort_aux='reverse-last-date-received'
+set sort_re
+set strict_threads="yes"
+
+#
+# look and feel
+#
+set pager_index_lines=8
+set pager_context=5
+set pager_stop
+set menu_scroll
+set smart_wrap
+set tilde
+unset markers
+set attach_format="%u%D%I %t%4n %T%.140d%> [%.7m/%.10M, %.6e%?C?, %C?, %s] "
+
+# mailing list settings
+source ~/.mutt/muttrc.lists
+
+#
+# misc options
+#
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+set certificate_file=~/.mutt/certificates
+set auto_tag=yes
+set send_charset="utf-8"
+set charset="utf-8"
+set assumed_charset="utf-8"
+
+# very important flag, that allows to decode names for MIME attachments
+# (this is non-standard feature, but many clients use it)
+set rfc2047_parameters=yes
+
+set signature="~/.signature"
+
+
+#
+# contact management
+#
+set alias_file="~/.mutt/aliases"
+set sort_alias=alias
+set reverse_alias=yes
+source $alias_file
+
+# lbdb address database
+set query_command="lbdbq %s 2>/dev/null"
+set mime_forward=ask-no
+
+set hostname=skv.local
+
+
+# display recipient instead of sender in "Sent" folder view
+# set date_format='%d.%m.%Y %H:%M %Z'
+# set date_format='%d %b'
+set date_format='%y-%m-%d %H:%M'
+set my_index_format_pre='set index_format="%4C | %Z [%D] %-35.35'
+set my_index_format_post=' (%-4.4c) %?M?[%M] ?%s"'
+
+folder-hook .*[sS]ent.* "$my_index_format_pre"t"$my_index_format_post"
+folder-hook ! .*[sS]ent.* "$my_index_format_pre"F"$my_index_format_post"
+
+#
+#  ignore
+#
+ignore "Authentication-Results:"
+ignore "DomainKey-Signature:"
+ignore "DKIM-Signature:"
+hdr_order Date From To Cc
+alternative_order text/plain text/html *
+auto_view text/html
+bind editor <Tab> complete-query
+bind editor ^T complete
+bind editor <space> noop
+
+# keyboard shortcuts
+
+# macro index,pager \ega "<change-folder>=[Gmail]/All Mail<enter>" "Go to all mail"
+macro index,pager \egi "<change-folder>=INBOX<enter>" "Go to inbox"
+macro index,pager \egs "<change-folder>=[Gmail].Sent Mail<enter>" "Go to starred messages"
+macro index,pager \egS "<change-folder>=[Gmail].Spam<enter>" "Go to starred messages"
+macro index,pager \egd "<change-folder>=[Gmail].Drafts<enter>" "Go to drafts"
+macro index,pager \egw "<change-folder>=Work<enter>" "Go to work"
+macro index,pager \egp "<change-folder>=personal<enter>" "Go to personal"
+macro index,pager \egu "<change-folder>=unpersonal<enter>" "Go to personal"
+
+macro index S "<save-message>+[Gmail].Spam<enter>" "mark message as spam"
+macro index D "<save-message>+[Gmail].Trash<enter>" "move messge to the trash"
+
+bind index s noop
+bind pager s noop
+
+macro index,pager sw "<save-message>+Work<enter><save-message>+[Gmail].Trash<enter>" "Move message to the work folder"
+macro index,pager sp "<save-message>+personal<enter><save-message>+[Gmail].Trash<enter>" "Move message to the personal folder"
+macro index,pager su "<save-message>+unpersonal<enter><save-message>+[Gmail].Trash<enter>" "Move message to the unpersonal folder"
+macro index,pager ss "<save-message>+FOSS<enter><save-message>+[Gmail].Trash<enter>" "Move message to the FOSS folder"
+macro index,pager si "<save-message>+INBOX<enter><save-message>+INBOX<enter>" "Move message to inbox folder"
+
+bind index N search-opposite
+bind pager N search-opposite
+
+macro pager \ehwc "<pipe-message>hunspell_check.sh<enter>"
+
+#
+#  PGP support for mutt
+#
+set pgp_self_encrypt=yes
+set pgp_autosign=yes
+set pgp_replysign=yes
+set pgp_verify_sig=yes
+
+#
+# because codepage setting is lost with traditional PGP and
+# it breaks Russian messages with traditional signatures.
+# use message-hook for that instead
+#
+set pgp_auto_decode
+#message-hook '!(~g|~G) ~b"^-----BEGIN\ PGP\ (SIGNED\ )?MESSAGE"' "push '<check-traditional-pgp><edit-type>; charset=utf-8<enter>'"
+
+
+set pgp_sign_as=0x22362F2657A3AEAD
+set pgp_replyencrypt=yes
+set pgp_timeout=1800
+source /etc/Muttrc.d/gpg.rc
