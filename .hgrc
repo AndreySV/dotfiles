@@ -1,0 +1,16 @@
+[ui]
+username = Andrey Skvortsov <andrej.skvortzov@gmail.com>
+ssh=ssh -C
+
+[extensions]
+hgk=
+graphlog=
+hgext.hbisect=
+hgext.convert=
+hgext.strip=
+shelve=
+purge=
+transplant=
+
+# [qct]
+# signoff=Andrey Skvortsov
