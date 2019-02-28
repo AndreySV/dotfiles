@@ -34,8 +34,8 @@ mailboxes +FOSS \
 
 # sidebar
 set sidebar_visible=no
-macro index b '<enter-command>toggle sidebar_visible<enter>'
-macro pager b '<enter-command>toggle sidebar_visible<enter>'
+macro index \Cb '<enter-command>toggle sidebar_visible<enter>'
+macro pager \Cb '<enter-command>toggle sidebar_visible<enter>'
 bind index \CP sidebar-prev
 bind index \CN sidebar-next
 bind index \CO sidebar-open
