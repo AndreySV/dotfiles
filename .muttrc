@@ -51,7 +51,8 @@ set sidebar_divider_char=' │'
 # mail options
 #
 # don't quote signatures in the answer
-set editor="sigkiller %s; awk '/^$/ {print i+2; exit} {i++}' %s; edit.sh %s"
+# set editor="sigkiller %s; awk '/^$/ {print i+2; exit} {i++}' %s; edit.sh %s"
+set editor="edit.sh %s"
 
 set mail_check=180
 set envelope_from
