@@ -68,7 +68,7 @@ set include=yes
 # confirmations
 #
 unset move      # gmail does that
-set quit        # don't ask, just do
+set quit=ask-yes
 
 #
 # sort/threading
