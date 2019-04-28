@@ -702,9 +702,9 @@ Version 2018-10-27"
 (define-derived-mode my-sedona-mode java-mode "sedona"
   "major mode for editing sedona language code."
 
-  (setq comment-start "\\\*\\\*")
+  (setq comment-start "//")
   (font-lock-add-keywords 'my-sedona-mode '(("#.+" . font-lock-comment-face)))
-  (font-lock-add-keywords 'my-sedona-mode '(("\\\*\\\*.*" . font-lock-comment-face)))
+  (font-lock-add-keywords 'my-sedona-mode '(("//" . font-lock-comment-face)))
   (my-sedona-font-lock-keywords)
   )
 
