@@ -34,8 +34,8 @@ mailboxes +FOSS \
 
 # sidebar
 set sidebar_visible=no
-macro index b '<enter-command>toggle sidebar_visible<enter>'
-macro pager b '<enter-command>toggle sidebar_visible<enter>'
+macro index \Cb '<enter-command>toggle sidebar_visible<enter>'
+macro pager \Cb '<enter-command>toggle sidebar_visible<enter>'
 bind index \CP sidebar-prev
 bind index \CN sidebar-next
 bind index \CO sidebar-open
@@ -51,7 +51,8 @@ set sidebar_divider_char=' │'
 # mail options
 #
 # don't quote signatures in the answer
-set editor="sigkiller %s; awk '/^$/ {print i+2; exit} {i++}' %s; edit.sh %s"
+# set editor="sigkiller %s; awk '/^$/ {print i+2; exit} {i++}' %s; edit.sh %s"
+set editor="edit.sh %s"
 
 set mail_check=180
 set envelope_from
@@ -67,7 +68,7 @@ set include=yes
 # confirmations
 #
 unset move      # gmail does that
-set quit        # don't ask, just do
+set quit=ask-yes
 
 #
 # sort/threading
