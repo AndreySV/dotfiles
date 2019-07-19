@@ -180,7 +180,7 @@ macro pager \ehwc "<pipe-message>hunspell_check.sh<enter>"
 #
 #  PGP support for mutt
 #
-set pgp_self_encrypt=yes
+# set pgp_self_encrypt=yes # defaults
 set pgp_autosign=yes
 set pgp_replysign=yes
 set pgp_verify_sig=yes
