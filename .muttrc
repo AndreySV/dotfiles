@@ -3,11 +3,30 @@
 set from="andrej.skvortzov@gmail.com"
 set realname="Andrey Skvortsov"
 
-#
+###------------------------------------------------------
 # Settings for using mutt+offlineimap+smtp
-#
+###------------------------------------------------------
 set mbox_type=Maildir
 set folder=~/data/.offlineimap_data/gmail
+
+
+#--------------------------------------------------------
+# Settings for native imap support
+#--------------------------------------------------------
+unset mbox_type
+set imap_user=andrej.skvortzov@gmail.com
+# set imap_pass=SECRET
+set folder=imaps://imap.gmail.com/
+
+# Allow Mutt to open a new IMAP connection automatically.
+unset imap_passive
+
+# Keep the IMAP connection alive by polling intermittently (time in seconds).
+set imap_keepalive = 300
+
+# How often to check for new mail (time in seconds).
+set mail_check = 120
+#------------------------------------------------------
 
 # use wrapper script to collect outgoing addresses
 # set sendmail=/usr/bin/msmtp
