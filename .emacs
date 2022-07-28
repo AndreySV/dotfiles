@@ -46,8 +46,7 @@
     ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/"))))
   (add-to-list 'package-archives '("marmalade" . (concat "http" "://marmalade-repo.org/packages/")) t)
-  (when (> emacs-major-version 28)
-    (add-to-list 'package-archives '("nongnu" . (concat proto "://elpa.nongnu.org/nongnu/")))))
+  (add-to-list 'package-archives (cons "nongnu" (concat proto "://elpa.nongnu.org/nongnu/")) t))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
