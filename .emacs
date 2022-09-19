@@ -583,7 +583,7 @@ Version 2018-10-27"
 ;; external python packages are required to use jedi
 ;;
 ;; For Debian GNU/Linux systems these are:
-;; apt-get install python-sexpdata python-epc python-jedi
+;; apt-get install python3-sexpdata python3-epc python3-jedi
 ;;
 (use-package jedi
   :ensure t
@@ -603,6 +603,7 @@ Version 2018-10-27"
   (defvar jedi-config:python-module-sentinel "__init__.py")
 
   ;; (Many) config helpers follow
+  (setq jedi:server-command (list "python3" jedi:server-script))
 
   ;; Alternative methods of finding the current project root
   ;; Method 1: basic
