@@ -1,0 +1,29 @@
+# -*-shell-script-*- #
+
+hadk() { 
+    source $HOME/.hadk.env
+    echo "Env setup for2 $DEVICE"
+    
+    if [ -z "$ANDROID_ROOT" ]; then
+	export ANDROID_ROOT="$PLATFORM_SDK_ROOT/android/$RPM_VENDOR-$RPM_DEVICE/src/droid-full"
+    fi
+    alias croot="cd $ANDROID_ROOT"
+    export PS4="PlatformSDK"
+    echo "here: $PS4"
+}
+
+habusdk() {
+    ubu-chroot -r $PLATFORM_SDK_ROOT/sdks/ubuntu
+}
+
+mount_sdk() {
+    echo "Mounting /media as ${sdkroot}/media"
+    mkdir -p ${sdkroot}/media
+    mount --rbind /media ${sdkroot}/media
+}
+
+
+# PS1="PlatformSDK $PS1"
+
+
+

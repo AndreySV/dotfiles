@@ -150,3 +150,29 @@ umask 0022
 if [ -f ~/.bashrc_host ]; then
     . ~/.bashrc_host
 fi
+
+
+# settings for Aurora Platform SDK
+if [[ $MERSDK ]]; then
+    if [[ $MERSDKUBU ]]; then
+	export PS1="HABUILD_SDK [\${DEVICE}] $PS1"
+    else
+	export PS1="PlatformSDK $PS1"
+    fi
+
+    function hadk() {
+	source $HOME/.hadk.env
+	echo "Env setup for $DEVICE"
+
+	if [ -z "$ANDROID_ROOT" ]; then
+	    export ANDROID_ROOT="$PLATFORM_SDK_ROOT/android/$RPM_VENDOR-$RPM_DEVICE/src/droid-full"
+	fi
+	alias croot="cd $ANDROID_ROOT"
+    }
+
+    function habusdk() {
+	ubu-chroot -r $PLATFORM_SDK_ROOT/sdks/ubuntu
+    }
+
+    hadk
+fi
