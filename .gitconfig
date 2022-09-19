@@ -20,3 +20,7 @@
 
 [credential]
 	helper = cache --timeout=18000
+
+[include]
+	path = ~/.gitconfig_host
+
