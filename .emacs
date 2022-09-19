@@ -748,6 +748,13 @@ Version 2018-10-27"
     (while (search-forward (string ?\C-m) nil t)
                 (replace-match (string ?\C-j) nil t))))
 
+;; Close all buffer except the current one
+(defun kill-other-buffers ()
+    "Kill all other buffers."
+    (interactive)
+    (mapc 'kill-buffer
+          (delq (current-buffer)
+                (remove-if-not 'buffer-file-name (buffer-list)))))
 
 ;; helper for Debian Website proofreading
 (defun debwww-open-russian-file ()
