@@ -24,3 +24,6 @@
 [include]
 	path = ~/.gitconfig_host
 
+[url "ssh://git@github.com"]
+	insteadOf = https://github.com
+
