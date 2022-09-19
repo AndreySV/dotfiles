@@ -87,7 +87,18 @@ else
 fi
 
 # add information about current git branch
-export PS1+='$(__git_ps1 "(git)-[%s] ")\$ '
+GIT_PROMPT=0
+if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+    source /usr/share/git-core/contrib/completion/git-prompt.sh
+    GIT_PROMPT=1
+fi
+if [ -f /usr/lib/git-core/git-sh-prompt ]; then
+    source /usr/lib/git-core/git-sh-prompt
+    GIT_PROMPT=1
+fi
+if [ $GIT_PROMPT -eq 1 ]; then
+    export PS1+='$(__git_ps1 "(git)-[%s] ")\$ '
+fi
 
 unset color_prompt force_color_prompt
 
