@@ -33,3 +33,7 @@
 [url "ssh://git@os-git.omprussia.ru"]
 	insteadOf = https://os-git.omprussia.ru
 
+[color]
+	ui = auto
+[pull]
+	ff = only
