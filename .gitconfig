@@ -27,3 +27,9 @@
 [url "ssh://git@github.com"]
 	insteadOf = https://github.com
 
+[url "ssh://git@git.omprussia.ru"]
+	insteadOf = https://git.omprussia.ru
+
+[url "ssh://git@os-git.omprussia.ru"]
+	insteadOf = https://os-git.omprussia.ru
+
