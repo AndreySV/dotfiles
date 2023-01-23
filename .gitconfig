@@ -4,7 +4,7 @@
 	signingkey = 57A3AEAD
 
 [format]
-	signoff = true
+	signoff = false
 
 [sendemail]
 	smtpencryption = tls
