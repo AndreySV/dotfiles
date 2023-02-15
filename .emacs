@@ -198,6 +198,8 @@ Version 2018-10-27"
 ;;
 ;; package to work seamlessly with X
 ;; clipboard buffer
+;; For Debian GNU/Linux systems these are:
+;; apt-get install wl-clipboard
 (use-package xclip
   :ensure t
   :config
