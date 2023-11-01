@@ -1,1 +1,2 @@
 use_outside_path("/media")
+use_outside_path("/mnt")
