@@ -779,11 +779,3 @@ Version 2018-10-27"
   (deactivate-mark)
 )
 
-;; commit helper for Debian Website proofreading
-(defun debwww-commit-changes ()
-  (interactive)
-  (shell-command "cvs diff")
-  (switch-to-buffer-other-window "*Shell Command Output*")
-  (if (equal (read-char-choice "Is diff correct? <n/Y>" '(?n ?y)) '?y)
-      (shell-command "cvs commit -m '(Russian) Proofread translation'"))
-  )
