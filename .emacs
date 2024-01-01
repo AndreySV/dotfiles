@@ -244,6 +244,22 @@ Version 2018-10-27"
   :init
   (projectile-mode 1))
 
+
+;;
+;; startup dashboard
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+
+  (setq dashboard-projects-backend 'projectile)
+  (setq dashboard-items '((recents  . 10)
+                        (bookmarks . 5)
+                        (projects . 10)
+                        (agenda . 5)
+                        (registers . 5)))
+  )
+
 ;;
 ;; minor mode for editing parentheses
 (use-package paredit
