@@ -150,6 +150,10 @@ Version 2018-10-27"
   (add-hook 'xah-fly-command-mode-activate-hook 'xah-fly-keys-russian-on )
   (add-hook 'xah-fly-insert-mode-activate-hook 'xah-fly-keys-russian-off ))
 
+(use-package org
+  :ensure t
+  )
+
 ;;
 ;; package help to learn new keybindings
 ;; it displays keybindings in a popup window
