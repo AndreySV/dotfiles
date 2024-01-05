@@ -298,6 +298,11 @@ Version 2018-10-27"
   :config
   (customize-set-variable 'frame-background-mode 'dark))
 
+;;
+;; ANSI coloring in compilation mode
+(use-package ansi-color
+    :hook (compilation-filter . ansi-color-compilation-filter))
+
 
 ;;
 ;; automatically enable following commands
