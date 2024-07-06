@@ -15,6 +15,7 @@ set folder=~/data/.offlineimap_data/gmail
 #--------------------------------------------------------
 unset mbox_type
 set imap_user=andrej.skvortzov@gmail.com
+set imap_pass=`secret-tool lookup user andrej.skvortzov@gmail.com host imap.gmail.com`
 # set imap_pass=SECRET
 set folder=imaps://imap.gmail.com/
 
