@@ -105,7 +105,7 @@ unset color_prompt force_color_prompt
 
 # ccache settings
 # ccache -M 4G
-CCACHE_DIR=~/data/linux/.ccache
+CCACHE_DIR=~/data/programming/soft/linux/.ccache
 export CCACHE_DIR
 
 export ALTERNATE_EDITOR=""
