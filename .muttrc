@@ -30,8 +30,7 @@ set mail_check = 120
 #------------------------------------------------------
 
 # use wrapper script to collect outgoing addresses
-# set sendmail=/usr/bin/msmtp
-set sendmail=msmtp-lbdb.sh
+set sendmail=/usr/bin/msmtp
 
 #------------------------------------------------------
 # general mail options
