@@ -1,0 +1,6 @@
+application/pdf; evince '%s'; test=test -n "$DISPLAY"
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+image/gif; eog %s
+image/jpg; eog %s
+image/png; eog %s
+
