@@ -1,0 +1,44 @@
+
+# lists is used only in list-reply (L by default).
+lists linux-kernel@vger.kernel.org
+lists kernel-janitors@vger.kernel.org
+lists linux-embedded@vger.kernel.org
+lists linux-next@vger.kernel.org
+lists linux-omap@vger.kernel.org
+lists linux-rt-users@vger.kernel.org
+lists linux-serial@vger.kernel.org
+lists stable-rt@vger.kernel.org
+lists stable@vger.kernel.org
+lists linux-arm-kernel@lists.arm.linux.org.uk
+lists linux-acpi@vger.kernel.org 
+lists debian-mentors@lists.debian.org
+lists talk@hamburg.ccc.de
+lists elbe-devel@linutronix.de
+lists kernelnewbies@kernelnewbies.org
+lists linux-kernel-announce@vger.kernel.org
+lists intern@hamburg.ccc.de
+lists freedombox-discuss@lists.alioth.debian.org
+lists u-boot@lists.denx.de
+lists u-boot+nodisclaimer@lists.denx.de
+
+subscribe libreplanet-discuss@libreplanet.org
+subscribe debian-l10n-russian@lists.debian.org
+subscribe debian-i18n@lists.debian.org
+subscribe debian-devel-announce@lists.debian.org
+subscribe debian-announce@lists.debian.org
+subscribe debian-embedded@lists.debian.org
+subscribe debian-events-eu@lists.debian.org
+subscribe debian-www@lists.debian.org
+subscribe spblinux@googlegroups.com
+subscribe sedonadev@googlegroups.com
+subscribe beremiz-devel@lists.sourceforge.net
+subscribe beremiz-devel-owner@lists.sourceforge.net
+subscribe bacnet-developers@lists.sourceforge.net
+subscribe sigrok-devel@lists.sourceforge.net
+subscribe announce@sfconservancy.org
+subscribe newsletter-ru@lists.fsfe.org
+subscribe canfestival-devel@lists.sourceforge.net
+subscribe lxml@lxml.de
+subscribe DevOps-40-announce@meetup.com
+subscribe elbe-devel@linutronix.de
+subscribe u-boot@lists.denx.de
