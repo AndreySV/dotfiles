@@ -643,7 +643,7 @@ Version 2018-10-27"
       (progn
 	(dolist (repo-file repo-files)
 	  (setq project-root (vc-find-root buf-dir repo-file))
-	  (when project-root (return)))
+	  (when project-root (cl-return)))
 	(if project-root
 	    (expand-file-name project-root)
 	  nil))))
